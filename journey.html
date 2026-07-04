@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Journey — Pranto Roy</title>
+<meta name="description" content="Ride through the journey of Pranto Roy — projects, skills, education and awards as stops on a road.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cyan:#00e5ff; --violet:#a78bfa; --purple:#8b5cf6; --magenta:#ff4d9d; --green:#34f5c5; --gold:#ffd166;
+  --text:#eef3ff; --muted:#aab6d4; --panel:rgba(10,14,32,.78); --line:rgba(0,229,255,.28);
+  --road-h:17vh;
+  --fd:'Orbitron',sans-serif; --fb:'Space Grotesk',sans-serif; --fm:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--fb);color:var(--text);background:#0a0d24;user-select:none}
+a{color:var(--cyan);text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+kbd{font-family:var(--fm);font-size:.7rem;border:1px solid rgba(255,255,255,.3);border-bottom-width:3px;border-radius:6px;padding:2px 8px;background:rgba(255,255,255,.08);color:#fff}
+
+/* ============ SCENE & SKY ============ */
+#scene{position:fixed;inset:0;overflow:hidden}
+.sky{position:absolute;inset:0;transition:opacity 2s ease;opacity:0}
+#skyDawn{background:linear-gradient(#241a52 0%,#7c3f7e 45%,#e77d67 75%,#f7b267 100%)}
+#skyDay{background:linear-gradient(#2563c9 0%,#5fa8e8 55%,#a8d8f5 85%,#d8f0ff 100%)}
+#skySunset{background:linear-gradient(#191339 0%,#5b2470 40%,#c94b6a 70%,#ff9e5e 92%)}
+#skyNight{background:linear-gradient(#020210 0%,#0a0c2e 55%,#181a4a 100%)}
+#sun{position:absolute;width:92px;height:92px;border-radius:50%;left:70vw;top:14vh;
+  background:radial-gradient(circle at 38% 35%,#fff7d6,#ffd166 55%,#ff9e5e);
+  box-shadow:0 0 90px 30px rgba(255,209,102,.55);transition:opacity 2s}
+#moon{position:absolute;width:70px;height:70px;border-radius:50%;left:72vw;top:12vh;opacity:0;
+  background:radial-gradient(circle at 62% 38%,#ffffff,#cfd8ff 60%,#9aa4d6);
+  box-shadow:0 0 60px 18px rgba(200,210,255,.35);transition:opacity 2s}
+#moon::after{content:"";position:absolute;width:14px;height:14px;border-radius:50%;left:14px;top:26px;background:rgba(150,160,210,.5);
+  box-shadow:22px -12px 0 -3px rgba(150,160,210,.45),12px 14px 0 -5px rgba(150,160,210,.4)}
+#nightStars{position:absolute;inset:0;opacity:0;transition:opacity 2s}
+#nightStars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;animation:twk 3s infinite}
+@keyframes twk{0%,100%{opacity:.9}50%{opacity:.2}}
+
+/* ============ PARALLAX ============ */
+.pl{position:absolute;left:0;bottom:var(--road-h);width:100%;pointer-events:none;background-repeat:repeat-x;background-position:bottom;will-change:background-position;transition:opacity 1.8s ease}
+#Lmount{height:44vh;opacity:.85;background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='1100' height='330' viewBox='0 0 1100 330'><path d='M0 240 L90 150 170 235 280 90 390 225 500 130 610 250 720 100 830 220 930 150 1100 240 V330 H0 Z' fill='%23171243'/><path d='M280 90 L308 138 252 138 Z' fill='%23e8ecff' opacity='.85'/><path d='M720 100 L746 146 694 146 Z' fill='%23e8ecff' opacity='.8'/></svg>");background-size:1100px 44vh}
+#Lhills{height:22vh;background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='760' height='190' viewBox='0 0 760 190'><path d='M0 130 Q95 92 190 118 T380 112 T570 122 T760 130 V190 H0 Z' fill='%230d1b3f'/><path d='M0 152 Q130 128 260 146 T520 142 T760 152 V190 H0 Z' fill='%23101f47'/></svg>");background-size:760px 22vh}
+#clouds{position:absolute;inset:0;pointer-events:none}
+.cloud{position:absolute;width:180px;height:44px;border-radius:40px;background:rgba(255,255,255,.75);filter:blur(1px);transition:filter 2s,opacity 2s}
+.cloud::before,.cloud::after{content:"";position:absolute;border-radius:50%;background:inherit}
+.cloud::before{width:80px;height:66px;left:26px;top:-30px}
+.cloud::after{width:60px;height:48px;left:86px;top:-20px}
+body.night .cloud{filter:blur(1px) brightness(.35);opacity:.5}
+
+/* ============ ROAD ============ */
+#road{position:absolute;left:0;right:0;bottom:0;height:var(--road-h);
+  background:linear-gradient(#3b3f5c 0,#23263e 12%,#191c30 40%,#12142a 100%)}
+#road::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;
+  background:linear-gradient(90deg,rgba(0,229,255,.5),rgba(167,139,250,.5));box-shadow:0 0 18px rgba(0,229,255,.35)}
+#dashes{position:absolute;left:0;right:0;top:46%;height:7px;will-change:background-position;
+  background:repeating-linear-gradient(90deg,var(--gold) 0 70px,transparent 70px 170px);opacity:.85;border-radius:4px}
+
+/* ============ WORLD / STOPS ============ */
+#world{position:absolute;inset:0;will-change:transform}
+.stop{position:absolute;top:0;height:100%;width:100vw;pointer-events:none}
+.stop *{pointer-events:auto}
+.signpost{position:absolute;bottom:calc(var(--road-h) - 2px);left:9vw;width:170px;text-align:center}
+.signpost .board{font-family:var(--fd);font-size:.72rem;letter-spacing:.14em;color:var(--text);
+  background:linear-gradient(135deg,#122048,#1c1740);border:2px solid var(--line);border-radius:12px;padding:10px 8px;
+  box-shadow:0 0 18px rgba(0,229,255,.25)}
+.signpost .board small{display:block;font-family:var(--fm);font-size:.58rem;color:var(--green);letter-spacing:.2em;margin-top:4px}
+.signpost .pole{width:8px;height:74px;margin:0 auto;background:linear-gradient(#4c5270,#23263e);border-radius:4px}
+
+.card{position:absolute;z-index:3;left:53vw;bottom:calc(var(--road-h) + 8vh);transform:translateX(-50%) translateY(40px) scale(.92);
+  width:min(660px,88vw);max-height:calc(78vh - var(--road-h));overflow:auto;opacity:0;pointer-events:none!important;
+  background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px 26px;backdrop-filter:blur(10px);
+  box-shadow:0 18px 50px rgba(0,0,0,.5),0 0 30px rgba(0,229,255,.12);
+  transition:opacity .5s ease .25s,transform .6s cubic-bezier(.2,1.2,.3,1) .25s;scrollbar-width:thin}
+.card::-webkit-scrollbar{width:8px}
+.card::-webkit-scrollbar-thumb{background:linear-gradient(var(--cyan),var(--purple));border-radius:5px}
+.stop.here .card{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+.stop.here .card,.stop.here .card *{pointer-events:auto!important}
+.card .tag{font-family:var(--fm);font-size:.64rem;color:var(--green);letter-spacing:.22em}
+.card h2{font-family:var(--fd);font-size:clamp(1.05rem,2.6vw,1.5rem);margin:6px 0 4px;letter-spacing:.03em;
+  background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+.card .sub{font-family:var(--fm);font-size:.7rem;color:var(--violet);margin-bottom:12px}
+.card p{color:var(--muted);font-size:.9rem;line-height:1.65;margin-bottom:10px}
+.card ul{list-style:none;margin:2px 0 12px}
+.card li{color:var(--muted);font-size:.85rem;line-height:1.6;padding-left:18px;position:relative}
+.card li::before{content:"▸";position:absolute;left:0;color:var(--cyan)}
+.chip{display:inline-block;font-family:var(--fm);font-size:.66rem;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--cyan);background:rgba(0,229,255,.06);margin:3px 4px 0 0}
+.chip.v{color:var(--violet);border-color:rgba(167,139,250,.35);background:rgba(139,92,246,.08)}
+.btn{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 18px;border-radius:12px;
+  font-family:var(--fm);font-size:.74rem;letter-spacing:.05em;border:1px solid var(--cyan);color:var(--cyan);
+  background:rgba(0,229,255,.08);transition:.25s}
+.btn:hover{background:rgba(0,229,255,.18);box-shadow:0 0 18px rgba(0,229,255,.4);transform:translateY(-2px)}
+.btn.solid{background:linear-gradient(90deg,var(--cyan),var(--purple));color:#04060f;border:none;font-weight:700}
+.btn.gold{border-color:var(--gold);color:var(--gold);background:rgba(255,209,102,.08)}
+
+/* project artwork frame */
+.shot{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:4px 0 14px;background:#0a0e22;box-shadow:0 8px 26px rgba(0,0,0,.4)}
+.shot .bar{display:flex;gap:6px;align-items:center;padding:7px 12px;background:#141936;border-bottom:1px solid rgba(255,255,255,.06)}
+.shot .bar i{width:9px;height:9px;border-radius:50%}
+.shot .bar i:nth-child(1){background:#ff5f57}.shot .bar i:nth-child(2){background:#febc2e}.shot .bar i:nth-child(3){background:#28c840}
+.shot .bar span{font-family:var(--fm);font-size:.58rem;color:var(--muted);margin-left:8px}
+.shot svg{display:block;width:100%;height:auto}
+
+/* hero card */
+.hero-card{display:grid;grid-template-columns:150px 1fr;gap:20px;align-items:center}
+.me-wrap{position:relative;width:150px;height:150px}
+.me-ring{position:absolute;inset:-7px;border-radius:50%;
+  background:conic-gradient(var(--cyan),var(--purple),var(--magenta),var(--gold),var(--cyan));animation:spin 6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.me-ph{position:absolute;inset:0;border-radius:50%;overflow:hidden;border:4px solid #0a0e22;
+  background:linear-gradient(135deg,var(--cyan),var(--purple));display:grid;place-items:center}
+.me-ph b{font-family:var(--fd);font-size:2.2rem;color:#04060f}
+.me-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+@media(max-width:620px){.hero-card{grid-template-columns:1fr;justify-items:center;text-align:center}}
+.mini-stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.ms{border:1px solid var(--line);border-radius:12px;padding:8px 14px;text-align:center;background:rgba(0,229,255,.05)}
+.ms b{display:block;font-family:var(--fd);color:var(--cyan);font-size:1rem}
+.ms span{font-family:var(--fm);font-size:.56rem;color:var(--muted);letter-spacing:.08em}
+
+/* skill groups */
+.sgroup{border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:12px 14px;margin-bottom:10px;background:rgba(255,255,255,.03)}
+.sgroup .nm{font-family:var(--fd);font-size:.74rem;letter-spacing:.08em;color:var(--text);display:block;margin-bottom:8px}
+.sgroup .chips{margin-bottom:6px}
+.sgroup .chip{font-size:.62rem;padding:3px 9px}
+.uses{font-family:var(--fm);font-size:.62rem;color:var(--muted);letter-spacing:.04em}
+.uses b{color:var(--violet);font-weight:400}
+.uses::before{content:"⤷ used in · ";color:var(--green)}
+
+/* certs */
+.certs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.cert{border:1px solid rgba(255,209,102,.35);border-radius:14px;padding:14px;text-align:center;background:rgba(255,209,102,.05)}
+.cert .tro{font-size:1.6rem;display:block;margin-bottom:6px;filter:drop-shadow(0 0 10px rgba(255,209,102,.5))}
+.cert h3{font-size:.82rem;margin-bottom:3px}
+.cert span{display:block;font-family:var(--fm);font-size:.6rem;color:var(--muted)}
+.cert .org{color:var(--gold)}
+@media(max-width:560px){.certs{grid-template-columns:1fr}}
+
+/* decor */
+.tree{position:absolute;bottom:var(--road-h);width:70px;height:110px}
+.tree .top{position:absolute;left:5px;right:5px;top:0;height:74px;border-radius:50% 50% 46% 46%;background:radial-gradient(circle at 35% 30%,#1d6f5c,#0e3f46)}
+.tree .trunk{position:absolute;left:30px;bottom:0;width:10px;height:44px;background:linear-gradient(#4a3355,#241c38);border-radius:4px}
+.tree.pine .top{border-radius:0;background:none}
+.tree.pine .top::before{content:"";position:absolute;left:50%;transform:translateX(-50%);border-left:30px solid transparent;border-right:30px solid transparent;border-bottom:46px solid #11524e;top:0}
+.tree.pine .top::after{content:"";position:absolute;left:50%;transform:translateX(-50%);border-left:36px solid transparent;border-right:36px solid transparent;border-bottom:48px solid #0d4148;top:28px}
+.lamp{position:absolute;bottom:var(--road-h);width:14px;height:150px}
+.lamp .pole{position:absolute;left:5px;bottom:0;width:5px;height:130px;background:linear-gradient(#3c4262,#181b30);border-radius:3px}
+.lamp .head{position:absolute;left:-4px;top:12px;width:22px;height:12px;border-radius:8px;background:#2c3152}
+.lamp .glow{position:absolute;left:-1px;top:20px;width:16px;height:16px;border-radius:50%;
+  background:radial-gradient(#fff8d0,#ffd166 55%,transparent 72%);opacity:0;transition:opacity 1.5s}
+body.night .lamp .glow{opacity:1;box-shadow:0 0 40px 16px rgba(255,209,102,.35)}
+
+/* ============ SECTION GATES ============ */
+.gate{position:absolute;top:0;height:100%;width:100vw;pointer-events:none}
+.g-pyl{position:absolute;bottom:var(--road-h);width:10px;height:36vh;border-radius:6px;
+  background:linear-gradient(to top,rgba(0,229,255,.8),rgba(139,92,246,.3),transparent);box-shadow:0 0 26px rgba(0,229,255,.5)}
+.g-pyl::after{content:"";position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);width:70px;height:14px;border-radius:50%;
+  background:radial-gradient(rgba(0,229,255,.55),transparent 70%)}
+.g-wrap{position:absolute;left:50vw;top:13vh;transform:translateX(-50%);text-align:center;width:96vw}
+.g-kick{font-family:var(--fm);font-size:.72rem;letter-spacing:.5em;color:var(--gold)}
+.g-txt{font-family:var(--fd);font-weight:900;font-size:clamp(2rem,7.5vw,4.6rem);letter-spacing:.1em;margin:14px 0;
+  background:linear-gradient(90deg,var(--cyan),var(--violet),var(--magenta));-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 26px rgba(0,229,255,.4))}
+.g-sub{font-family:var(--fm);font-size:.74rem;letter-spacing:.3em;color:var(--muted)}
+.gate.lit .g-txt{animation:gpulse 1.9s cubic-bezier(.16,1,.3,1)}
+.gate.lit .g-kick{animation:gkick 1.9s ease}
+.gate.lit .g-pyl{animation:gpyl 1.9s ease}
+@keyframes gpulse{0%{transform:scale(.6);opacity:.3;filter:blur(10px)}
+  28%{transform:scale(1.13);opacity:1;filter:blur(0) drop-shadow(0 0 44px rgba(0,229,255,.85))}
+  50%{transform:scale(1)}100%{transform:scale(1);filter:drop-shadow(0 0 26px rgba(0,229,255,.4))}}
+@keyframes gkick{0%{opacity:0;letter-spacing:1.3em}40%{opacity:1;letter-spacing:.5em}100%{opacity:1}}
+@keyframes gpyl{0%,100%{box-shadow:0 0 26px rgba(0,229,255,.5)}30%{box-shadow:0 0 60px rgba(0,229,255,.95)}}
+
+/* ============ SCOOTER ============ */
+#scooter{position:absolute;left:16vw;bottom:calc(var(--road-h) * .38);width:240px;z-index:5;filter:drop-shadow(0 10px 14px rgba(0,0,0,.45))}
+#scooter svg{display:block;width:100%;height:auto}
+.wheel{transform-box:fill-box;transform-origin:center;animation:roll .55s linear infinite;animation-play-state:paused}
+body.driving .wheel{animation-play-state:running}
+@keyframes roll{to{transform:rotate(360deg)}}
+#scootBody{transform-box:fill-box;transform-origin:center bottom}
+body.driving #scootBody{animation:bob .35s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(0) rotate(-.4deg)}to{transform:translateY(-3.5px) rotate(.5deg)}}
+#beam{opacity:0;transition:opacity 1.5s}
+body.night #beam{opacity:.5}
+#scooter.flip{transform:scaleX(-1)}
+
+/* ============ COMPANIONS (dog & cat) ============ */
+.buddy{position:absolute;bottom:calc(var(--road-h) - 8px);z-index:4;filter:drop-shadow(0 10px 12px rgba(0,0,0,.38))}
+.buddy .flipper,.buddy svg{display:block;width:100%;height:auto;overflow:visible}
+#dogB{left:calc(16vw + 265px);width:112px}
+#catB{left:calc(16vw + 378px);width:100px}
+body.driving .buddy{animation:hop .3s ease-in-out infinite alternate}
+body.driving #catB{animation-delay:.12s}
+@keyframes hop{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+body.driving .buddy svg{animation:trot .3s ease-in-out infinite alternate}
+@keyframes trot{from{transform:rotate(-2.5deg)}to{transform:rotate(3deg)}}
+body.back .buddy .flipper{transform:scaleX(-1)}
+.tail{transform-box:fill-box;transform-origin:right bottom;animation:wag 1s ease-in-out infinite alternate}
+@keyframes wag{from{transform:rotate(-14deg)}to{transform:rotate(22deg)}}
+body.driving .tail{animation-duration:.4s}
+.cat-tail{transform-box:fill-box;transform-origin:bottom right;animation:cwag 2.2s ease-in-out infinite alternate}
+@keyframes cwag{from{transform:rotate(-6deg)}to{transform:rotate(14deg)}}
+body.driving .cat-tail{animation-duration:.6s}
+.ear-t{transform-box:fill-box;transform-origin:bottom center;animation:eartw 5s ease-in-out infinite}
+@keyframes eartw{0%,88%,100%{transform:rotate(0)}92%{transform:rotate(-12deg)}96%{transform:rotate(6deg)}}
+.pup{transition:transform .18s ease-out}
+@media(max-width:700px){
+  #scooter{width:170px;left:8vw}
+  #dogB{left:calc(8vw + 185px)}
+  #catB{display:none}
+}
+
+/* ============ BIRDS & FIREWORKS ============ */
+.bird{position:absolute;z-index:3;pointer-events:none;will-change:transform}
+.bird svg{width:46px;height:auto;overflow:visible}
+.wingL,.wingR{transform-box:fill-box;animation:flap .45s ease-in-out infinite alternate}
+.wingL{transform-origin:right center}
+.wingR{transform-origin:left center;animation-delay:.05s}
+@keyframes flap{from{transform:rotate(26deg)}to{transform:rotate(-24deg)}}
+@keyframes flyAcross{from{transform:translateX(-12vw)}to{transform:translateX(115vw)}}
+.fw{position:absolute;width:6px;height:6px;border-radius:50%;pointer-events:none;animation:burst 1.3s ease-out forwards}
+@keyframes burst{0%{transform:scale(.2);opacity:1;box-shadow:0 0 0 0 currentColor}60%{opacity:1}
+  100%{transform:scale(1);opacity:0;box-shadow:0 -46px 0 -1px currentColor,33px -33px 0 -1px currentColor,46px 0 0 -1px currentColor,33px 33px 0 -1px currentColor,0 46px 0 -1px currentColor,-33px 33px 0 -1px currentColor,-46px 0 0 -1px currentColor,-33px -33px 0 -1px currentColor}}
+
+/* ============ TRANSCRIPT MODAL ============ */
+.modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:20px;
+  background:rgba(2,3,12,.72);backdrop-filter:blur(6px)}
+.modal.open{display:flex}
+.modal-backdrop{position:absolute;inset:0}
+.modal-card{position:relative;z-index:1;width:min(680px,94vw);max-height:86vh;overflow:auto;
+  background:linear-gradient(180deg,rgba(10,14,32,.98),rgba(8,11,24,.98));border:1px solid var(--line);border-radius:22px;
+  box-shadow:0 18px 60px rgba(0,0,0,.55),0 0 30px rgba(0,229,255,.12);padding:26px;animation:mpop .3s cubic-bezier(.2,1.3,.3,1)}
+@keyframes mpop{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-close{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:var(--text);font-size:1.2rem;transition:.2s}
+.modal-close:hover{color:var(--magenta);border-color:var(--magenta)}
+.ts-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.ts-kicker{font-family:var(--fm);font-size:.64rem;letter-spacing:.3em;color:var(--gold);margin-bottom:6px}
+.ts-name{font-family:var(--fd);font-size:1.15rem;letter-spacing:.06em}
+.ts-grade{font-family:var(--fd);font-size:clamp(1.2rem,4vw,1.8rem);color:var(--cyan);white-space:nowrap}
+.ts-row{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-top:1px solid rgba(255,255,255,.07);font-size:.9rem}
+.ts-row span{color:var(--muted)}
+.ts-row b{font-family:var(--fm);font-weight:700;color:var(--text);text-align:right}
+.tr-t{width:100%;border-collapse:collapse;font-family:var(--fm);font-size:.72rem;margin-top:16px}
+.tr-t th{color:var(--green);text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);letter-spacing:.12em;font-weight:400}
+.tr-t td{color:var(--muted);padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.06)}
+.tr-t td:nth-child(2),.tr-t td:nth-child(3),.tr-t th:nth-child(2),.tr-t th:nth-child(3){text-align:right}
+.tr-t tr.hi td{color:var(--gold)}
+.tr-t tr.hi td:first-child::after{content:" ★";font-size:.6rem}
+.ts-note{margin-top:14px;color:var(--muted);font-size:.86rem;line-height:1.6}
+
+/* ============ UPGRADED SCENERY ============ */
+.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.45;pointer-events:none;
+  animation:orbFloat 16s ease-in-out infinite alternate;transition:opacity 2s}
+#orbA{width:44vw;height:44vw;left:-10vw;top:-12vh;background:radial-gradient(circle,#0e4d8c,transparent 65%)}
+#orbB{width:38vw;height:38vw;right:-8vw;top:20vh;background:radial-gradient(circle,#5b2d8c,transparent 65%);animation-delay:-6s}
+body.night .orb{opacity:.22}
+@keyframes orbFloat{from{transform:translate(0,0) scale(1)}to{transform:translate(3vw,-3vh) scale(1.1)}}
+#Lcity{height:30vh;opacity:.9;background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='240' viewBox='0 0 900 240'><g fill='%230e1030'><rect x='20' y='120' width='60' height='120'/><rect x='95' y='80' width='46' height='160'/><rect x='160' y='140' width='70' height='100'/><rect x='250' y='60' width='40' height='180'/><rect x='305' y='110' width='64' height='130'/><rect x='390' y='90' width='50' height='150'/><rect x='460' y='130' width='72' height='110'/><rect x='550' y='70' width='44' height='170'/><rect x='610' y='120' width='60' height='120'/><rect x='690' y='95' width='48' height='145'/><rect x='755' y='135' width='66' height='105'/><rect x='840' y='85' width='40' height='155'/></g><g fill='%23ffd166' opacity='.55'><rect x='104' y='95' width='6' height='8'/><rect x='120' y='115' width='6' height='8'/><rect x='262' y='80' width='6' height='8'/><rect x='270' y='110' width='6' height='8'/><rect x='560' y='90' width='6' height='8'/><rect x='572' y='120' width='6' height='8'/><rect x='700' y='110' width='6' height='8'/><rect x='849' y='105' width='6' height='8'/></g></svg>");background-size:900px 30vh}
+#Lgreen{height:40vh;opacity:0;background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='300' viewBox='0 0 1000 300'><path d='M0 190 L110 130 210 215 320 100 430 225 540 140 650 235 760 115 870 205 1000 190 V300 H0 Z' fill='%23123f28'/><path d='M0 260 Q150 205 320 250 T660 240 T1000 260 V300 H0 Z' fill='%2317603a'/><path d='M120 300 l14 -40 14 40 Z' fill='%230d5231'/><path d='M150 300 l16 -52 16 52 Z' fill='%23106038'/><path d='M480 300 l14 -42 14 42 Z' fill='%230d5231'/><path d='M512 300 l16 -50 16 50 Z' fill='%23106038'/><path d='M840 300 l15 -46 15 46 Z' fill='%230d5231'/></svg>");background-size:1000px 40vh}
+#river{position:absolute;left:0;right:0;bottom:calc(var(--road-h) + 2.2vh);height:5.5vh;opacity:0;transition:opacity 1.8s;pointer-events:none;
+  background:linear-gradient(180deg,#46bee0,#15597f 55%,#0c4a73);
+  border-top:1px solid rgba(200,240,255,.5)}
+#bank{position:absolute;left:0;right:0;bottom:var(--road-h);height:2.4vh;opacity:0;transition:opacity 1.8s;pointer-events:none;
+  background:linear-gradient(180deg,#1e7c4b 0%,#145c38 45%,#0d4028 100%);border-top:1px solid rgba(120,220,160,.35)}
+#bank::before{content:"";position:absolute;left:0;right:0;top:-4px;height:4px;opacity:.6;
+  background:repeating-linear-gradient(90deg,transparent 0 26px,rgba(30,124,75,.9) 26px 34px)}
+#river::before{content:"";position:absolute;inset:0;opacity:.55;
+  background-image:radial-gradient(ellipse 46px 3px at 50% 50%,rgba(255,255,255,.45),transparent 70%);
+  background-size:150px 16px;animation:riverFlowA 7s linear infinite}
+#river::after{content:"";position:absolute;inset:0;opacity:.35;
+  background-image:radial-gradient(ellipse 30px 2px at 50% 50%,rgba(255,255,255,.4),transparent 70%);
+  background-size:110px 12px;animation:riverFlowB 5s linear infinite}
+@keyframes riverFlowA{from{background-position:0 0}to{background-position:150px 0}}
+@keyframes riverFlowB{from{background-position:0 7px}to{background-position:-110px 7px}}
+body.night #river{filter:brightness(.55) saturate(.8)}
+body.night #bank{filter:brightness(.5)}
+#shore{position:absolute;left:0;right:0;bottom:calc(var(--road-h) + 7.3vh);height:1.9vh;opacity:0;transition:opacity 1.8s;pointer-events:none;
+  background:linear-gradient(180deg,#2a8f57 0%,#17603a 55%,#0f4a2c 100%);border-bottom:1px solid rgba(140,230,170,.3)}
+#shore::after{content:"";position:absolute;left:0;right:0;top:-3px;height:3px;opacity:.55;
+  background:repeating-linear-gradient(90deg,transparent 0 30px,rgba(42,143,87,.9) 30px 38px)}
+body.night #shore{filter:brightness(.5)}
+#rail{position:absolute;left:0;right:0;bottom:var(--road-h);height:3.4vh;opacity:0;transition:opacity 1.8s;pointer-events:none;
+  background-image:repeating-linear-gradient(90deg,rgba(255,209,102,.95) 0 4px,transparent 4px 90px),
+    repeating-linear-gradient(90deg,#3a4166 0 6px,transparent 6px 90px);
+  background-size:90px 5px,90px 100%;background-position:44px 5px,0 0;background-repeat:repeat-x;will-change:background-position}
+#rail::before{content:"";position:absolute;left:0;right:0;top:1px;height:7px;border-radius:4px;
+  background:linear-gradient(180deg,#6a739f,#3a4166);box-shadow:0 2px 8px rgba(0,0,0,.5)}
+body.night #rail{filter:drop-shadow(0 0 7px rgba(255,209,102,.55))}
+#fence{position:absolute;left:0;right:0;bottom:var(--road-h);height:3.8vh;opacity:0;transition:opacity 1.8s;pointer-events:none;
+  background-image:repeating-linear-gradient(90deg,#6b4a2e 0 7px,transparent 7px 110px);
+  background-repeat:repeat-x;will-change:background-position}
+#fence::before{content:"";position:absolute;left:0;right:0;top:14%;height:6px;border-radius:3px;
+  background:linear-gradient(180deg,#8a6138,#5d3f26);box-shadow:0 2px 6px rgba(0,0,0,.4)}
+#fence::after{content:"";position:absolute;left:0;right:0;top:56%;height:6px;border-radius:3px;
+  background:linear-gradient(180deg,#7d5732,#543921)}
+body.night #fence{filter:brightness(.55)}
+#flies{position:absolute;left:0;right:0;bottom:var(--road-h);height:26vh;pointer-events:none;opacity:0;transition:opacity 2s}
+.flyy{position:absolute;width:4px;height:4px;border-radius:50%;background:#d8ff7a;
+  box-shadow:0 0 8px 2px rgba(200,255,120,.8);animation:flyF 6s ease-in-out infinite alternate}
+@keyframes flyF{from{transform:translate(0,0);opacity:.2}25%{opacity:1}to{transform:translate(44px,-32px);opacity:.4}}
+.shoot{position:absolute;width:120px;height:2px;border-radius:2px;pointer-events:none;z-index:2;
+  background:linear-gradient(90deg,#fff,transparent);rotate:18deg;animation:shootA 1.1s ease-out forwards}
+@keyframes shootA{0%{opacity:0;translate:0 0}10%{opacity:1}100%{opacity:0;translate:-38vw 12vh}}
+.tuft{position:absolute;bottom:calc(var(--road-h) - 2px);width:26px;height:16px;pointer-events:none;transform-origin:bottom;
+  background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='26' height='16' viewBox='0 0 26 16'><path d='M4 16 Q3 8 1 4 Q6 7 7 16 Z' fill='%23127a55'/><path d='M11 16 Q11 5 9 0 Q15 5 14 16 Z' fill='%230e5f4b'/><path d='M19 16 Q20 7 25 3 Q21 9 22 16 Z' fill='%23127a55'/></svg>") no-repeat;
+  animation:sway 3s ease-in-out infinite alternate}
+@keyframes sway{from{transform:skewX(-4deg)}to{transform:skewX(5deg)}}
+
+/* ============ MOTION POLISH ============ */
+.puff{position:absolute;bottom:calc(var(--road-h) * .45);width:12px;height:12px;border-radius:50%;z-index:4;pointer-events:none;
+  background:radial-gradient(rgba(220,228,255,.75),rgba(160,170,210,.15) 70%);animation:puffL 1s ease-out forwards}
+.puff.rev{animation-name:puffR}
+@keyframes puffL{to{transform:translate(-48px,-36px) scale(2.4);opacity:0}}
+@keyframes puffR{to{transform:translate(48px,-36px) scale(2.4);opacity:0}}
+.card>*{opacity:0;transform:translateY(16px);transition:opacity .45s ease,transform .5s cubic-bezier(.16,1,.3,1)}
+.stop.here .card>*{opacity:1;transform:none}
+.stop.here .card>*:nth-child(1){transition-delay:.4s}
+.stop.here .card>*:nth-child(2){transition-delay:.5s}
+.stop.here .card>*:nth-child(3){transition-delay:.6s}
+.stop.here .card>*:nth-child(4){transition-delay:.7s}
+.stop.here .card>*:nth-child(5){transition-delay:.8s}
+.stop.here .card>*:nth-child(6){transition-delay:.9s}
+.stop.here .card>*:nth-child(7){transition-delay:1s}
+.stop.here .card>*:nth-child(n+8){transition-delay:1.1s}
+.stop .signpost{opacity:0;transform:translateY(30px)}
+.stop.here .signpost{opacity:1;transform:none;animation:signIn .8s cubic-bezier(.2,1.4,.3,1)}
+@keyframes signIn{0%{transform:translateY(30px) scale(.8);opacity:0}60%{transform:translateY(-6px) scale(1.04);opacity:1}100%{transform:none;opacity:1}}
+.btn.solid{position:relative;overflow:hidden}
+.btn.solid::before{content:"";position:absolute;top:0;left:-80%;width:55%;height:100%;transform:skewX(-22deg);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);animation:sheen 3.2s ease infinite}
+@keyframes sheen{0%,60%{left:-80%}100%{left:130%}}
+.pdot.on{animation:dotGlow 1.6s infinite}
+@keyframes dotGlow{0%,100%{box-shadow:0 0 10px rgba(0,229,255,.7)}50%{box-shadow:0 0 20px rgba(0,229,255,1)}}
+#fadeIn::before{content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,transparent 0 40px,rgba(0,229,255,.25) 40px 42px);
+  animation:linesIn .9s ease-out forwards}
+@keyframes linesIn{from{transform:scaleX(8);opacity:1}to{transform:scaleX(1);opacity:0}}
+
+/* ============ UI ============ */
+#topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;gap:16px;padding:12px 20px;
+  background:linear-gradient(rgba(3,4,14,.72),transparent);pointer-events:none}
+#topbar .who{font-family:var(--fd);font-size:.82rem;letter-spacing:.12em}
+#topbar .who span{color:var(--cyan)}
+#topbar a.home{pointer-events:auto;font-family:var(--fm);font-size:.68rem;letter-spacing:.1em;color:var(--muted);
+  border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:6px 14px;transition:.25s}
+#topbar a.home:hover{color:var(--cyan);border-color:var(--cyan)}
+#pbar{display:flex;gap:7px;margin:0 auto;pointer-events:auto;background:rgba(6,8,22,.6);
+  border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:7px 12px;backdrop-filter:blur(8px)}
+.pdot{position:relative;width:13px;height:13px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);transition:.3s}
+.pdot:hover{transform:scale(1.35)}
+.pdot.on{background:linear-gradient(135deg,var(--cyan),var(--purple));border-color:var(--cyan);box-shadow:0 0 10px rgba(0,229,255,.7)}
+.pdot.past{background:rgba(52,245,197,.55);border-color:rgba(52,245,197,.6)}
+.pdot::after{content:attr(data-n);position:absolute;top:20px;left:50%;transform:translateX(-50%);white-space:nowrap;
+  font-family:var(--fm);font-size:.58rem;color:var(--text);background:rgba(6,8,22,.9);border:1px solid var(--line);
+  border-radius:8px;padding:3px 8px;opacity:0;pointer-events:none;transition:.2s}
+.pdot:hover::after{opacity:1}
+#odo{font-family:var(--fm);font-size:.66rem;color:var(--muted);letter-spacing:.12em}
+#hint{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:20;font-family:var(--fm);font-size:.68rem;
+  color:#fff;letter-spacing:.14em;background:rgba(6,8,22,.65);border:1px solid rgba(255,255,255,.14);
+  padding:8px 16px;border-radius:999px;backdrop-filter:blur(8px);transition:opacity .6s}
+#hint.dim{opacity:0}
+.navbtn{position:fixed;bottom:calc(var(--road-h) + 2vh);z-index:25;width:58px;height:58px;border-radius:50%;font-size:1.35rem;
+  color:var(--cyan);background:rgba(6,8,22,.72);border:1px solid var(--line);backdrop-filter:blur(6px);transition:.25s}
+.navbtn:hover{background:rgba(0,229,255,.18);box-shadow:0 0 20px rgba(0,229,255,.45)}
+.navbtn:disabled{opacity:.25;box-shadow:none}
+#prevB{left:16px}#nextB{right:16px}
+#nextB.pulse{animation:npulse 1.6s infinite}
+@keyframes npulse{0%,100%{box-shadow:0 0 0 0 rgba(0,229,255,.5)}50%{box-shadow:0 0 0 14px rgba(0,229,255,0)}}
+
+/* page fade-in from landing */
+#fadeIn{position:fixed;inset:0;z-index:60;background:#04060f;pointer-events:none;animation:pageIn 1s ease .1s forwards}
+@keyframes pageIn{to{opacity:0}}
+</style>
+</head>
+<body>
+<div id="scene">
+  <div class="sky" id="skyDawn"></div><div class="sky" id="skyDay"></div>
+  <div class="sky" id="skySunset"></div><div class="sky" id="skyNight"></div>
+  <div class="orb" id="orbA"></div><div class="orb" id="orbB"></div>
+  <div id="sun"></div><div id="moon"></div><div id="nightStars"></div>
+  <div id="clouds"></div>
+  <div class="pl" id="Lmount"></div>
+  <div class="pl" id="Lgreen"></div>
+  <div class="pl" id="Lcity"></div>
+  <div class="pl" id="Lhills"></div>
+  <div id="river"></div>
+  <div id="shore"></div>
+  <div id="bank"></div>
+  <div id="rail"></div>
+  <div id="fence"></div>
+  <div id="flies"></div>
+  <div id="road"><div id="dashes"></div></div>
+  <div id="world"></div>
+
+  <div id="scooter">
+    <svg viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bodyG" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#19d3f0"/><stop offset="1" stop-color="#7c5cf0"/>
+        </linearGradient>
+      </defs>
+      <polygon id="beam" points="196,64 240,46 240,86" fill="#fff8c9" opacity=".5"/>
+      <g id="scootBody">
+        <path d="M28 108 Q30 86 56 84 L96 82 Q104 82 108 90 L118 106 Q120 112 114 114 L44 116 Q30 116 28 108Z" fill="url(#bodyG)"/>
+        <rect x="20" y="88" width="22" height="6" rx="3" fill="#25315e"/>
+        <path d="M108 108 L150 108 Q158 108 162 100 L178 74" fill="none" stroke="#25315e" stroke-width="9" stroke-linecap="round"/>
+        <path d="M178 74 L192 62" stroke="#25315e" stroke-width="8" stroke-linecap="round"/>
+        <path d="M176 70 Q186 84 190 104" stroke="url(#bodyG)" stroke-width="12" stroke-linecap="round" fill="none"/>
+        <path d="M186 58 L200 52" stroke="#37406e" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="196" cy="62" r="7" fill="#ffe9a3"/>
+        <rect x="88" y="70" width="42" height="12" rx="6" fill="#141a38"/>
+        <path d="M112 76 Q116 48 140 44" stroke="#2c3766" stroke-width="13" stroke-linecap="round" fill="none"/>
+        <path d="M136 50 L182 58" stroke="#2c3766" stroke-width="8" stroke-linecap="round"/>
+        <path d="M112 78 Q126 84 136 96 L148 104" stroke="#222b52" stroke-width="10" stroke-linecap="round" fill="none"/>
+        <circle cx="150" cy="34" r="13" fill="#e8b98a"/>
+        <path d="M136 30 A15 15 0 0 1 165 31 L164 24 A15 13 0 0 0 137 23 Z" fill="#19d3f0"/>
+        <path d="M135 31 Q150 16 165 31 L165 26 Q150 10 135 26 Z" fill="#0fb8d8"/>
+      </g>
+      <g class="wheel"><circle cx="52" cy="126" r="21" fill="#141a30" stroke="#2e3a68" stroke-width="5"/><circle cx="52" cy="126" r="6" fill="#8fa2ff"/><line x1="52" y1="108" x2="52" y2="144" stroke="#3d4c85" stroke-width="3"/><line x1="34" y1="126" x2="70" y2="126" stroke="#3d4c85" stroke-width="3"/></g>
+      <g class="wheel"><circle cx="192" cy="126" r="21" fill="#141a30" stroke="#2e3a68" stroke-width="5"/><circle cx="192" cy="126" r="6" fill="#8fa2ff"/><line x1="192" y1="108" x2="192" y2="144" stroke="#3d4c85" stroke-width="3"/><line x1="174" y1="126" x2="210" y2="126" stroke="#3d4c85" stroke-width="3"/></g>
+    </svg>
+  </div>
+
+  <div class="buddy" id="dogB"><div class="flipper">
+    <svg viewBox="0 0 130 110">
+      <path class="tail" d="M8 62 Q2 44 16 40 Q12 56 22 64 Z" fill="#b47a42"/>
+      <ellipse cx="52" cy="80" rx="32" ry="21" fill="#d9995c"/>
+      <circle cx="30" cy="80" r="17" fill="#c98850"/>
+      <rect x="62" y="82" width="9" height="22" rx="4" fill="#c98850"/>
+      <rect x="76" y="82" width="9" height="22" rx="4" fill="#d9995c"/>
+      <ellipse cx="60" cy="103" rx="34" ry="4" fill="rgba(0,0,0,.3)"/>
+      <circle cx="86" cy="42" r="21" fill="#d9995c"/>
+      <path class="ear-t" d="M70 26 Q64 6 80 12 Q84 20 78 30 Z" fill="#a06a3a"/>
+      <path d="M96 24 Q104 6 110 18 Q108 28 100 32 Z" fill="#a06a3a"/>
+      <ellipse cx="100" cy="50" rx="13" ry="9" fill="#f0c08e"/>
+      <circle cx="108" cy="47" r="4" fill="#2a1c14"/>
+      <path d="M100 56 q5 4 10 0" stroke="#2a1c14" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <circle cx="80" cy="38" r="5.5" fill="#fff"/><circle class="pup" cx="81.5" cy="39" r="2.8" fill="#1c1108"/>
+      <circle cx="94" cy="37" r="5.5" fill="#fff"/><circle class="pup" cx="95.5" cy="38" r="2.8" fill="#1c1108"/>
+      <ellipse cx="46" cy="88" rx="10" ry="5" fill="#c98850"/>
+    </svg>
+  </div></div>
+  <div class="buddy" id="catB"><div class="flipper">
+    <svg viewBox="0 0 130 110">
+      <path class="cat-tail" d="M12 84 Q-6 62 12 46 Q10 66 24 76 L20 88 Z" fill="#8e99c9"/>
+      <ellipse cx="52" cy="82" rx="29" ry="18" fill="#aab4d8"/>
+      <path d="M34 74 q-4 8 0 16" stroke="#8e99c9" stroke-width="3" fill="none"/>
+      <path d="M46 72 q-4 9 0 18" stroke="#8e99c9" stroke-width="3" fill="none"/>
+      <rect x="60" y="82" width="8" height="20" rx="4" fill="#98a3cf"/>
+      <rect x="73" y="82" width="8" height="20" rx="4" fill="#aab4d8"/>
+      <ellipse cx="58" cy="102" rx="30" ry="4" fill="rgba(0,0,0,.3)"/>
+      <circle cx="84" cy="44" r="19" fill="#aab4d8"/>
+      <path class="ear-t" d="M70 30 L66 8 L82 22 Z" fill="#98a3cf"/>
+      <path d="M92 26 L102 8 L104 26 Z" fill="#98a3cf"/>
+      <path d="M70 30 L68 14 L79 23 Z" fill="#f0b6c8" opacity=".8"/>
+      <ellipse cx="93" cy="52" rx="9" ry="6" fill="#cdd5f0"/>
+      <path d="M93 49 l3 3 -3 3 -3 -3 Z" fill="#f085a8"/>
+      <path d="M96 55 q4 3 8 0 M90 55 q-4 3 -8 0" stroke="#5a628c" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <line x1="100" y1="48" x2="118" y2="44" stroke="#dfe5fa" stroke-width="1.4"/>
+      <line x1="100" y1="52" x2="118" y2="54" stroke="#dfe5fa" stroke-width="1.4"/>
+      <ellipse cx="78" cy="40" rx="5" ry="6" fill="#eaf6c8"/><ellipse class="pup" cx="79" cy="41" rx="2" ry="4" fill="#15240c"/>
+      <ellipse cx="92" cy="39" rx="5" ry="6" fill="#eaf6c8"/><ellipse class="pup" cx="93" cy="40" rx="2" ry="4" fill="#15240c"/>
+    </svg>
+  </div></div>
+</div>
+
+<div id="topbar">
+  <div class="who">PRANTO<span>_ROY</span> · THE JOURNEY</div>
+  <div id="pbar"></div>
+  <div id="odo">KM 0.0</div>
+  <a class="home" href="index.html">⌂ HOME</a>
+</div>
+<button class="navbtn" id="prevB" onclick="go(-1)" aria-label="previous stop">◀</button>
+<button class="navbtn pulse" id="nextB" onclick="go(1)" aria-label="next stop">▶</button>
+<div id="hint">→ PRESS RIGHT ARROW OR ▶ TO RIDE · CLICK DOTS TO JUMP</div>
+<div id="fadeIn"></div>
+<div id="transcriptModal" class="modal" aria-hidden="true">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-card" role="dialog" aria-modal="true">
+    <button class="modal-close" type="button" aria-label="close" data-close>×</button>
+    <div class="ts-head">
+      <div>
+        <div class="ts-kicker">BRAC UNIVERSITY · STUDENT ID 22301261</div>
+        <div class="ts-name">Pranto Roy</div>
+      </div>
+      <div class="ts-grade">CGPA 3.81 / 4.00</div>
+    </div>
+    <div class="ts-row"><span>Programme</span><b>B.Sc. in Computer Science & Engineering</b></div>
+    <div class="ts-row"><span>Credits earned</span><b>132.00 · Graduating May 2026</b></div>
+    <div class="ts-row"><span>Scholarships</span><b>5× consecutive merit awards</b></div>
+    <table class="tr-t">
+      <tr><th>SEMESTER</th><th>GPA</th><th>CGPA</th></tr>
+      <tr class="hi"><td>Summer 2022</td><td>4.00</td><td>4.00</td></tr>
+      <tr><td>Fall 2022</td><td>3.85</td><td>3.88</td></tr>
+      <tr><td>Spring 2023</td><td>3.68</td><td>3.79</td></tr>
+      <tr><td>Summer 2023</td><td>3.85</td><td>3.81</td></tr>
+      <tr><td>Fall 2023</td><td>3.50</td><td>3.74</td></tr>
+      <tr><td>Spring 2024</td><td>3.68</td><td>3.72</td></tr>
+      <tr><td>Summer 2024</td><td>3.93</td><td>3.76</td></tr>
+      <tr><td>Fall 2024</td><td>3.85</td><td>3.77</td></tr>
+      <tr><td>Spring 2025</td><td>3.78</td><td>3.77</td></tr>
+      <tr class="hi"><td>Summer 2025</td><td>4.00</td><td>3.80</td></tr>
+      <tr><td>Fall 2025</td><td>3.75</td><td>3.79</td></tr>
+      <tr class="hi"><td>Spring 2026</td><td>4.00</td><td>3.81</td></tr>
+    </table>
+    <p class="ts-note">Straight A's in Neural Networks, Artificial Intelligence, Cryptography, Computer Networks, Algorithms, Operating Systems, Computer Architecture & Graphics — the exact stack this portfolio is built on.</p>
+    <a class="btn solid" href="transcript.pdf" target="_blank" rel="noopener">📜 OPEN OFFICIAL GRADE SHEET (PDF)</a>
+  </div>
+</div>
+
+<div id="stopSrc" style="display:none">
+
+  <!-- 0 · START -->
+  <div class="stop" data-name="START">
+    <div class="signpost"><div class="board">🏁 START<small>DHAKA, BD</small></div><div class="pole"></div></div>
+    <div class="card">
+      <div class="hero-card">
+        <div class="me-wrap"><div class="me-ring"></div><div class="me-ph"><b>PR</b><img src="PROFILE.JPG" alt="Pranto Roy" onerror="this.remove()"></div></div>
+        <div>
+          <span class="tag">// PLAYER FOUND</span>
+          <h2>Pranto Roy</h2>
+          <div class="sub">ML ENGINEER · FULL-STACK DEV · SECURITY ENGINEER</div>
+          <p>CSE graduate from BRAC University — 3.81 CGPA with 5× consecutive merit scholarships. I designed my own neural network architecture that beat VAEs, and encrypted a whole medical platform to learn cryptography by building it. The road ahead goes through everything I've made.</p>
+          <div class="mini-stats">
+            <div class="ms"><b>3.81</b><span>CGPA</span></div>
+            <div class="ms"><b>5×</b><span>SCHOLARSHIPS</span></div>
+            <div class="ms"><b>7</b><span>PROJECTS</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1 · EDUCATION -->
+  <div class="stop" data-name="EDUCATION">
+    <div class="signpost"><div class="board">🎓 EDUCATION<small>KM 1 · CAMPUS</small></div><div class="pole"></div></div>
+    <div class="card">
+      <span class="tag">// STOP 01 — THE CAMPUS</span>
+      <h2>🎓 Education</h2>
+      <div class="sub">WHERE THE STATS WERE GRINDED</div>
+      <p><b style="color:var(--text)">B.Sc. in Computer Science & Engineering</b><br>BRAC University, Dhaka · 2022 – May 2026 · <b style="color:var(--cyan)">CGPA 3.81 / 4.00</b></p>
+      <ul>
+        <li>5× consecutive merit-based scholarship recipient · 132 credits</li>
+        <li>Straight A's in Neural Networks, AI, Cryptography, Computer Networks & Algorithms</li>
+        <li>Volunteer — BUCLC · Member — Research for Development Club</li>
+      </ul>
+      <p><b style="color:var(--text)">Higher Secondary Certificate — Science</b><br>Dhaka City College · 2019 – 2022 · <b style="color:var(--gold)">GPA 5.00 / 5.00 (perfect)</b></p>
+      <button class="btn solid" id="transcriptBtn" type="button">📜 VIEW TRANSCRIPT</button>
+    </div>
+  </div>
+
+  <!-- 2 · SKILLS -->
+  <div class="stop" data-name="SKILLS">
+    <div class="signpost"><div class="board">⚡ SKILL FOREST<small>KM 2 · TECH TREE</small></div><div class="pole"></div></div>
+    <div class="card">
+      <span class="tag">// STOP 02 — THE SKILL FOREST</span>
+      <h2>⚡ Skills & Tech Tree</h2>
+      <div class="sub">EVERY SKILL POINTS TO A REAL PROJECT WHERE IT WAS USED</div>
+      <div class="sgroup"><span class="nm">🧠 ML / AI</span>
+        <div class="chips"><span class="chip">PyTorch</span><span class="chip">Neural Architecture Design</span><span class="chip">VAEs · Autoencoders</span><span class="chip">Stochastic Modeling · Heteroscedasticity</span><span class="chip">Loss Function Design</span><span class="chip">Unsupervised Learning</span><span class="chip">Deep Neural Networks</span><span class="chip">Scikit-learn</span><span class="chip">Model Evaluation</span><span class="chip">Feature Engineering</span><span class="chip">Kaggle</span></div>
+        <div class="uses"><b>HSEN research</b> · <b>Air Quality Index Analysis</b></div>
+      </div>
+      <div class="sgroup"><span class="nm">🔐 Security & Crypto</span>
+        <div class="chips"><span class="chip">RSA · ECC</span><span class="chip">SHA-256</span><span class="chip">HMAC</span><span class="chip">2FA / TOTP</span><span class="chip">Digital Signatures</span><span class="chip">RBAC</span><span class="chip">Password Hashing</span><span class="chip">Web App Security</span></div>
+        <div class="uses"><b>MedLink</b> · <b>Goldman Sachs job simulation</b></div>
+      </div>
+      <div class="sgroup"><span class="nm">🕸 Full-Stack Web</span>
+        <div class="chips"><span class="chip">Flask · SocketIO</span><span class="chip">REST APIs</span><span class="chip">React.js</span><span class="chip">Node.js</span><span class="chip">Express.js</span><span class="chip">MongoDB</span><span class="chip">SQLAlchemy · SQLite</span><span class="chip">SQL · PHP</span><span class="chip">HTML · CSS · Tailwind</span><span class="chip">Maps & Location APIs</span><span class="chip">Real-Time Systems</span></div>
+        <div class="uses"><b>LifeLine</b> · <b>MedLink</b> · <b>Rescue Paws</b> · <b>Online Marketplace System</b></div>
+      </div>
+      <div class="sgroup"><span class="nm">🛰 Networking</span>
+        <div class="chips"><span class="chip">Cisco Packet Tracer</span><span class="chip">VLSM · Subnetting</span><span class="chip">RIP · Static Routing</span><span class="chip">DHCP · DHCP Relay</span><span class="chip">DNS · SMTP · POP3</span><span class="chip">Network Design</span><span class="chip">Troubleshooting</span></div>
+        <div class="uses"><b>Federal Flight Agency Network</b></div>
+      </div>
+      <div class="sgroup"><span class="nm">🤖 Embedded · IoT · Robotics</span>
+        <div class="chips"><span class="chip">ESP32</span><span class="chip">Arduino IDE · IoT Cloud</span><span class="chip">C++</span><span class="chip">Transistors · TRIAC</span><span class="chip">Logic Gates</span><span class="chip">Assembly (EMU8086)</span><span class="chip">Microprocessors</span><span class="chip">Robotics</span></div>
+        <div class="uses"><b>Smart Home Automation</b> · <b>Fire-Extinguishing Robot</b> · <b>Line Follower Car</b> · <b>Traffic Light Simulator</b></div>
+      </div>
+      <div class="sgroup"><span class="nm">🎮 Game Development</span>
+        <div class="chips"><span class="chip">3D Game Programming</span><span class="chip">Enemy AI / Behavior</span><span class="chip">Level Design</span><span class="chip">Input & Interaction</span></div>
+        <div class="uses"><b>The Final Door</b></div>
+      </div>
+      <div class="sgroup"><span class="nm">🔧 Core & Tools</span>
+        <div class="chips"><span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">Data Structures · Algorithms</span><span class="chip">OOP</span><span class="chip">DBMS</span><span class="chip">Discrete Math</span><span class="chip v">Git · GitHub</span><span class="chip v">Linux</span><span class="chip v">DevOps · CI/CD</span><span class="chip v">LaTeX</span><span class="chip v">Problem Solving</span></div>
+        <div class="uses"><b>BRAC University coursework</b> · every project on this road</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 · AQI -->
+  <div class="stop" data-name="PROJECT · AQI">
+    <div class="signpost"><div class="board">📊 PROJECT 1<small>2024 · ML</small></div><div class="pole"></div></div>
+    <div class="card">
+      <span class="tag">// QUEST 2024 — DATA SORCERY</span>
+      <h2>Air Quality Index Analysis</h2>
+      <div class="sub">PYTHON · SCIKIT-LEARN · KAGGLE DATASET</div>
+      <div class="shot"><div class="bar"><i></i><i></i><i></i><span>aqi-analysis.ipynb</span></div>
+        <svg viewBox="0 0 400 180"><rect width="400" height="180" fill="#0a0e22"/>
+          <g stroke="#1c2547" stroke-width="1">
+            <line x1="40" y1="30" x2="40" y2="150"/><line x1="40" y1="150" x2="370" y2="150"/>
+            <line x1="40" y1="60" x2="370" y2="60" opacity=".4"/><line x1="40" y1="90" x2="370" y2="90" opacity=".4"/><line x1="40" y1="120" x2="370" y2="120" opacity=".4"/>
+          </g>
+          <rect x="55" y="95" width="22" height="55" rx="3" fill="#34f5c5" opacity=".8"/>
+          <rect x="90" y="70" width="22" height="80" rx="3" fill="#00e5ff" opacity=".8"/>
+          <rect x="125" y="110" width="22" height="40" rx="3" fill="#34f5c5" opacity=".8"/>
+          <rect x="160" y="55" width="22" height="95" rx="3" fill="#ffd166" opacity=".85"/>
+          <rect x="195" y="80" width="22" height="70" rx="3" fill="#ff4d9d" opacity=".8"/>
+          <polyline points="66,88 101,60 136,102 171,46 206,72 240,58" fill="none" stroke="#a78bfa" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="315" cy="82" r="34" fill="none" stroke="#1c2547" stroke-width="9"/>
+          <path d="M315 48 A34 34 0 1 1 285 99" fill="none" stroke="#00e5ff" stroke-width="9" stroke-linecap="round"/>
+          <text x="315" y="86" font-family="monospace" font-size="15" fill="#eef3ff" text-anchor="middle">AQI</text>
+          <text x="315" y="140" font-family="monospace" font-size="10" fill="#8b96b3" text-anchor="middle">prediction model</text>
+        </svg></div>
+      <ul>
+        <li>ML models on the Kaggle India air-quality dataset to predict AQI levels</li>
+        <li>Identified pollution patterns and surfaced actionable insights</li>
+      </ul>
+      <span class="chip">Python</span><span class="chip">Scikit-learn</span><span class="chip">ML</span><span class="chip v">Kaggle</span><br>
+      <a class="btn" href="https://github.com/Pranto-Roy-10/BRACU-CSE-422-Project-Air-quality-index-analysis-" target="_blank" rel="noopener">↗ VIEW CODE ON GITHUB</a>
+    </div>
+  </div>
+
+  <!-- 4 · SMART HOME -->
+  <div class="stop" data-name="PROJECT · IoT">
+    <div class="signpost"><div class="board">🏠 PROJECT 2<small>APR 2025 · IoT</small></div><div class="pole"></div></div>
+    <div class="card">
+      <span class="tag">// QUEST 2025 — HARDWARE ARTIFICER</span>
+      <h2>Smart Home Automation via WiFi</h2>
+      <div class="sub">ESP32 · C++ · TRIAC/BT136 · ARDUINO IoT CLOUD</div>
+      <div class="shot"><div class="bar"><i></i><i></i><i></i><span>iot-dashboard — live</span></div>
+        <svg viewBox="0 0 400 180"><rect width="400" height="180" fill="#0a0e22"/>
+          <path d="M60 95 L120 50 L180 95" fill="none" stroke="#00e5ff" stroke-width="4" stroke-linejoin="round"/>
+          <rect x="75" y="95" width="90" height="55" rx="4" fill="none" stroke="#00e5ff" stroke-width="4"/>
+          <rect x="105" y="115" width="26" height="35" rx="3" fill="#00e5ff" opacity=".35"/>
+          <path d="M96 38 q24 -20 48 0" fill="none" stroke="#34f5c5" stroke-width="4" stroke-linecap="round"/>
+          <path d="M104 46 q16 -13 32 0" fill="none" stroke="#34f5c5" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="120" cy="53" r="4" fill="#34f5c5"/>
+          <g font-family="monospace" font-size="11" fill="#aab6d4">
+            <rect x="220" y="42" width="150" height="30" rx="9" fill="#141936"/><text x="234" y="61">💡 Lights</text>
+            <rect x="322" y="48" width="38" height="18" rx="9" fill="#34f5c5"/><circle cx="351" cy="57" r="7" fill="#0a0e22"/>
+            <rect x="220" y="82" width="150" height="30" rx="9" fill="#141936"/><text x="234" y="101">🌀 Fan</text>
+            <rect x="322" y="88" width="38" height="18" rx="9" fill="#34f5c5"/><circle cx="351" cy="97" r="7" fill="#0a0e22"/>
+            <rect x="220" y="122" width="150" height="30" rx="9" fill="#141936"/><text x="234" y="141">🔌 Relay 3</text>
+            <rect x="322" y="128" width="38" height="18" rx="9" fill="#3a3f63"/><circle cx="331" cy="137" r="7" fill="#0a0e22"/>
+          </g>
+        </svg></div>
+      <ul>
+        <li>WiFi-controlled automation on ESP32 with 4-relay TRIAC switching</li>
+        <li>Arduino IoT Cloud dashboard — real-time remote control of lights & fans</li>
+      </ul>
+      <span class="chip">ESP32</span><span class="chip">C++</span><span class="chip">TRIAC / BT136</span><span class="chip v">Arduino IoT Cloud</span><br>
+      <a class="btn" href="https://github.com/Pranto-Roy-10/Smart-Home-Automation-WiFi" target="_blank" rel="noopener">↗ VIEW CODE ON GITHUB</a>
+    </div>
+  </div>
+
+  <!-- 5 · RESCUE PAWS -->
+  <div class="stop" data-name="PROJECT · MERN">
+    <div class="signpost"><div class="board">🐾 PROJECT 3<small>MAY 2025 · MERN</small></div><div class="pole"></div></div>
+    <div class="card">
+      <span class="tag">// QUEST 2025 — MERN GUILD CONTRACT</span>
+      <h2>Rescue Paws — E-Commerce</h2>
+      <div class="sub">REACT · NODE · EXPRESS · MONGODB</div>
+      <div class="shot"><div class="bar"><i></i><i></i><i></i><span>rescuepaws.shop</span></div>
+        <svg viewBox="0 0 400 180"><rect width="400" height="180" fill="#0a0e22"/>
+          <rect x="0" y="0" width="400" height="30" fill="#141936"/>
+          <text x="16" y="20" font-family="monospace" font-size="12" fill="#00e5ff">🐾 RescuePaws</text>
+          <text x="330" y="20" font-family="monospace" font-size="12" fill="#ffd166">🛒 3</text>
+          <g font-family="monospace" font-size="10" fill="#aab6d4">
+            <rect x="22" y="48" width="108" height="108" rx="10" fill="#11162e" stroke="#1f2a52"/>
+            <circle cx="76" cy="84" r="22" fill="#1c2547"/><text x="76" y="90" text-anchor="middle" font-size="18">🦴</text>
+            <text x="76" y="126" text-anchor="middle">Chew Bone</text><text x="76" y="142" text-anchor="middle" fill="#34f5c5">$8.99</text>
+            <rect x="146" y="48" width="108" height="108" rx="10" fill="#11162e" stroke="#1f2a52"/>
+            <circle cx="200" cy="84" r="22" fill="#1c2547"/><text x="200" y="90" text-anchor="middle" font-size="18">🐱</text>
+            <text x="200" y="126" text-anchor="middle">Cat Tower</text><text x="200" y="142" text-anchor="middle" fill="#34f5c5">$39.99</text>
+            <rect x="270" y="48" width="108" height="108" rx="10" fill="#11162e" stroke="#1f2a52"/>
+            <circle cx="324" cy="84" r="22" fill="#1c2547"/><text x="324" y="90" text-anchor="middle" font-size="18">🥫</text>
+            <text x="324" y="126" text-anchor="middle">Pet Food</text><text x="324" y="142" text-anchor="middle" fill="#34f5c5">$12.50</text>
+          </g>
+        </svg></div>
+      <ul>
+        <li>MERN-stack pet product store — dynamic listings, cart, auth</li>
+        <li>Real-time stock updates and a full admin panel</li>
+      </ul>
+      <span class="chip">React.js</span><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">MongoDB</span><span class="chip v">Tailwind</span><br>
+      <a class="btn" href="https://github.com/Pranto-Roy-10/Rescue-Paws" target="_blank" rel="noopener">↗ VIEW CODE ON GITHUB</a>
+    </div>
+  </div>
+  <!-- 6 · HSEN -->
+  <div class="stop" data-name="PROJECT · HSEN ★">
+    <div class="signpost"><div class="board">🧠 PROJECT 4 ★<small>SEP 2025 · RESEARCH</small></div><div class="pole"></div></div>
+    <div class="card" style="border-color:rgba(255,77,157,.45);box-shadow:0 18px 50px rgba(0,0,0,.5),0 0 30px rgba(255,77,157,.18)">
+      <span class="tag" style="color:var(--magenta)">// FLAGSHIP QUEST — THE NEURAL ARCHITECT</span>
+      <h2>HSEN — Heteroscedastic Stochastic Embedding Network</h2>
+      <div class="sub">PYTORCH · NOVEL ARCHITECTURE · BEAT THE VAE</div>
+      <div class="shot"><div class="bar"><i></i><i></i><i></i><span>hsen — embeddings & benchmarks</span></div>
+        <svg viewBox="0 0 400 180"><rect width="400" height="180" fill="#0a0e22"/>
+          <g opacity=".9">
+            <circle cx="70" cy="60" r="5" fill="#00e5ff"/><circle cx="86" cy="48" r="4" fill="#00e5ff"/><circle cx="95" cy="66" r="6" fill="#00e5ff"/><circle cx="78" cy="76" r="4" fill="#00e5ff"/><circle cx="105" cy="52" r="3" fill="#00e5ff"/>
+            <circle cx="170" cy="120" r="5" fill="#ff4d9d"/><circle cx="186" cy="108" r="4" fill="#ff4d9d"/><circle cx="178" cy="132" r="6" fill="#ff4d9d"/><circle cx="198" cy="122" r="4" fill="#ff4d9d"/>
+            <circle cx="120" cy="105" r="5" fill="#ffd166"/><circle cx="104" cy="118" r="4" fill="#ffd166"/><circle cx="132" cy="120" r="4" fill="#ffd166"/><circle cx="118" cy="132" r="3" fill="#ffd166"/>
+            <ellipse cx="88" cy="61" rx="34" ry="26" fill="none" stroke="#00e5ff" stroke-dasharray="4 4" opacity=".5"/>
+            <ellipse cx="183" cy="121" rx="30" ry="22" fill="none" stroke="#ff4d9d" stroke-dasharray="4 4" opacity=".5"/>
+            <ellipse cx="118" cy="118" rx="28" ry="22" fill="none" stroke="#ffd166" stroke-dasharray="4 4" opacity=".5"/>
+          </g>
+          <g font-family="monospace" font-size="10" fill="#aab6d4">
+            <rect x="240" y="34" width="140" height="34" rx="8" fill="#11162e" stroke="#1f2a52"/>
+            <text x="252" y="48" fill="#34f5c5">trustworthiness</text><text x="252" y="61" fill="#eef3ff" font-size="13">0.997 <tspan fill="#34f5c5" font-size="9">+0.003</tspan></text>
+            <rect x="240" y="76" width="140" height="34" rx="8" fill="#11162e" stroke="#1f2a52"/>
+            <text x="252" y="90" fill="#00e5ff">continuity</text><text x="252" y="103" fill="#eef3ff" font-size="13">0.866 <tspan fill="#34f5c5" font-size="9">+0.041</tspan></text>
+            <rect x="240" y="118" width="140" height="34" rx="8" fill="#11162e" stroke="#1f2a52"/>
+            <text x="252" y="132" fill="#a78bfa">clustering NMI</text><text x="252" y="145" fill="#eef3ff" font-size="13">0.968 <tspan fill="#34f5c5" font-size="9">+0.021</tspan></text>
+            <text x="70" y="162" fill="#8b96b3">kidney disease dataset · HSEN vs standard VAE</text>
+          </g>
+        </svg></div>
+      <ul>
+        <li>Novel non-deterministic NN capturing embedding uncertainty via heteroscedastic variance modelling</li>
+        <li>Outperformed standard VAE on all three benchmark metrics</li>
+        <li>Full LaTeX research report — ablations, visualisations, reproducible code</li>
+      </ul>
+      <span class="chip">PyTorch</span><span class="chip">Python</span><span class="chip">Unsupervised</span><span class="chip v">Research · LaTeX</span><br>
+      <a class="btn" href="https://github.com/Pranto-Roy-10/Non-deterministic-unsupervised-nn-Heteroscedastic-Stochastic-Embedding-Network-HSEN-" target="_blank" rel="noopener">↗ VIEW CODE ON GITHUB</a>
+    </div>
+  </div>
+
+  <!-- 7 · LIFELINE -->
+  <div class="stop" data-name="PROJECT · LIFELINE">
+    <div class="signpost"><div class="board">🚨 PROJECT 5<small>JAN 2026 · FULL-STACK</small></div><div class="pole"></div></div>
+    <div class="card">
+      <span class="tag">// QUEST 2026 — GUARDIAN PROTOCOL</span>
+      <h2>LifeLine — Real-Time Help Platform</h2>
+      <div class="sub">FLASK · REST · MAPS API · CI/CD</div>
+      <div class="shot"><div class="bar"><i></i><i></i><i></i><span>lifeline — live map</span></div>
+        <svg viewBox="0 0 400 180"><rect width="400" height="180" fill="#0c1228"/>
+          <g stroke="#1a2450" stroke-width="2">
+            <line x1="0" y1="45" x2="400" y2="45"/><line x1="0" y1="95" x2="400" y2="95"/><line x1="0" y1="145" x2="400" y2="145"/>
+            <line x1="70" y1="0" x2="70" y2="180"/><line x1="160" y1="0" x2="160" y2="180"/><line x1="250" y1="0" x2="250" y2="180"/><line x1="330" y1="0" x2="330" y2="180"/>
+          </g>
+          <polyline points="70,145 160,145 160,95 250,95 250,45 330,45" fill="none" stroke="#34f5c5" stroke-width="4" stroke-dasharray="10 7" stroke-linecap="round"/>
+          <circle cx="70" cy="145" r="15" fill="rgba(255,77,157,.25)"/><circle cx="70" cy="145" r="7" fill="#ff4d9d"/>
+          <text x="88" y="166" font-family="monospace" font-size="10" fill="#ff4d9d">SOS</text>
+          <path d="M330 45 c-9 0 -15 7 -15 14 c0 10 15 22 15 22 c0 0 15 -12 15 -22 c0 -7 -6 -14 -15 -14z" fill="#00e5ff"/>
+          <circle cx="330" cy="59" r="5" fill="#0c1228"/>
+          <text x="304" y="30" font-family="monospace" font-size="10" fill="#00e5ff">HELPER ✓</text>
+          <g font-family="monospace" font-size="9" fill="#aab6d4">
+            <rect x="18" y="12" width="120" height="26" rx="8" fill="#11162e" stroke="#1f2a52"/>
+            <text x="28" y="29">⭐ trust score: 4.9</text>
+          </g>
+        </svg></div>
+      <ul>
+        <li>Connects users with nearby verified helpers — maps, chat, AI matching</li>
+        <li>Trust & reputation scoring + end-to-end CI/CD deployment</li>
+      </ul>
+      <span class="chip">Flask</span><span class="chip">REST APIs</span><span class="chip">Maps API</span><span class="chip v">DevOps · CI/CD</span><br>
+      <a class="btn" href="https://github.com/Pranto-Roy-10/LifeLine" target="_blank" rel="noopener">↗ VIEW CODE ON GITHUB</a>
+    </div>
+  </div>
+
+  <!-- 8 · MEDLINK -->
+  <div class="stop" data-name="PROJECT · MEDLINK">
+    <div class="signpost"><div class="board">🔐 PROJECT 6<small>MAY 2026 · SECURITY</small></div><div class="pole"></div></div>
+    <div class="card">
+      <span class="tag">// QUEST 2026 — CRYPTOMANCER TRIAL</span>
+      <h2>MedLink — Secure Medical Platform</h2>
+      <div class="sub">FLASK · RSA · ECC · HMAC · 2FA/TOTP</div>
+      <div class="shot"><div class="bar"><i></i><i></i><i></i><span>medlink — encrypted chat 🔒</span></div>
+        <svg viewBox="0 0 400 180"><rect width="400" height="180" fill="#0a0e22"/>
+          <rect x="0" y="0" width="400" height="28" fill="#141936"/>
+          <text x="14" y="19" font-family="monospace" font-size="11" fill="#34f5c5">🩺 Dr. Rahman — online · E2E 🔒</text>
+          <g font-family="monospace" font-size="10">
+            <rect x="18" y="42" width="200" height="30" rx="12" fill="#1a2450"/>
+            <text x="32" y="61" fill="#dfe7ff">Patient report attached 📄</text>
+            <rect x="182" y="82" width="200" height="30" rx="12" fill="#0e3b46"/>
+            <text x="196" y="101" fill="#c8fff2">Prescription signed ✔ 🔏</text>
+            <rect x="18" y="122" width="150" height="30" rx="12" fill="#1a2450"/>
+            <text x="32" y="141" fill="#dfe7ff">TOTP verified ✅</text>
+          </g>
+          <g transform="translate(320,120)">
+            <rect x="0" y="14" width="44" height="34" rx="7" fill="#ffd166"/>
+            <path d="M8 16 v-6 a14 14 0 0 1 28 0 v6" fill="none" stroke="#ffd166" stroke-width="7"/>
+            <circle cx="22" cy="30" r="5" fill="#0a0e22"/>
+          </g>
+          <text x="256" y="166" font-family="monospace" font-size="9" fill="#8b96b3">RSA · ECC · SHA-256 · HMAC · TOTP</text>
+        </svg></div>
+      <ul>
+        <li>Patient–doctor–specialist platform, real-time encrypted WebSocket chat</li>
+        <li>RSA/ECC key exchange, digital signatures, TOTP 2FA — 5+ protocols in one app</li>
+        <li>RBAC portals for 4 user types: prescriptions, referrals, audit logs</li>
+      </ul>
+      <span class="chip">Flask · SocketIO</span><span class="chip">RSA · ECC</span><span class="chip">SHA-256 · HMAC</span><span class="chip v">2FA / TOTP</span><br>
+      <a class="btn" href="https://github.com/Pranto-Roy-10/MedLink" target="_blank" rel="noopener">↗ VIEW CODE ON GITHUB</a>
+    </div>
+  </div>
+
+  <!-- 9 · NETWORK -->
+  <div class="stop" data-name="PROJECT · NETWORK">
+    <div class="signpost"><div class="board">🛰 PROJECT 7<small>MAY 2026 · NETWORKS</small></div><div class="pole"></div></div>
+    <div class="card">
+      <span class="tag">// QUEST 2026 — NETWORK WARDEN</span>
+      <h2>Federal Flight Agency Network</h2>
+      <div class="sub">CISCO PACKET TRACER · VLSM · RIPv2 · DHCP · DNS</div>
+      <div class="shot"><div class="bar"><i></i><i></i><i></i><span>topology — 5 nodes, 0 default routes</span></div>
+        <svg viewBox="0 0 400 180"><rect width="400" height="180" fill="#0a0e22"/>
+          <g stroke="#2c3a72" stroke-width="2.5">
+            <line x1="200" y1="55" x2="90" y2="105"/><line x1="200" y1="55" x2="310" y2="105"/>
+            <line x1="90" y1="105" x2="160" y2="145"/><line x1="310" y1="105" x2="245" y2="145"/><line x1="90" y1="105" x2="310" y2="105"/>
+          </g>
+          <circle r="4" fill="#34f5c5"><animateMotion dur="3s" repeatCount="indefinite" path="M200 55 L90 105 L160 145"/></circle>
+          <circle r="4" fill="#ff4d9d"><animateMotion dur="4s" repeatCount="indefinite" path="M310 105 L200 55"/></circle>
+          <g font-family="monospace" font-size="9" text-anchor="middle">
+            <rect x="168" y="34" width="64" height="34" rx="8" fill="#141936" stroke="#00e5ff"/><text x="200" y="49" fill="#00e5ff">CMD HQ</text><text x="200" y="61" fill="#8b96b3">.0/26</text>
+            <rect x="58" y="88" width="64" height="34" rx="8" fill="#141936" stroke="#a78bfa"/><text x="90" y="103" fill="#a78bfa">AI NAV</text><text x="90" y="115" fill="#8b96b3">.64/27</text>
+            <rect x="278" y="88" width="64" height="34" rx="8" fill="#141936" stroke="#ffd166"/><text x="310" y="103" fill="#ffd166">SIM LAB</text><text x="310" y="115" fill="#8b96b3">.96/27</text>
+            <rect x="128" y="128" width="64" height="34" rx="8" fill="#141936" stroke="#34f5c5"/><text x="160" y="143" fill="#34f5c5">HANGAR</text><text x="160" y="155" fill="#8b96b3">.128/28</text>
+            <rect x="213" y="128" width="64" height="34" rx="8" fill="#141936" stroke="#ff4d9d"/><text x="245" y="143" fill="#ff4d9d">EMRGNCY</text><text x="245" y="155" fill="#8b96b3">.144/28</text>
+          </g>
+        </svg></div>
+      <ul>
+        <li>Mission-critical aerospace network — VLSM subnetting across 5 nodes</li>
+        <li>Static + RIPv2 routing, floating static failover, DHCP relay</li>
+        <li>Centralised DNS/Web + SMTP/POP3 — validated with no default routes</li>
+      </ul>
+      <span class="chip">Cisco Packet Tracer</span><span class="chip">VLSM</span><span class="chip">RIPv2</span><span class="chip v">DHCP · DNS · SMTP</span><br>
+      <a class="btn" href="https://github.com/Pranto-Roy-10/Federal-Flight-Agency-Network-CSE421" target="_blank" rel="noopener">↗ VIEW CODE ON GITHUB</a>
+    </div>
+  </div>
+
+  <!-- 10 · TROPHIES -->
+  <div class="stop" data-name="TROPHIES">
+    <div class="signpost"><div class="board">🏆 TROPHY ROOM<small>CERTIFICATES</small></div><div class="pole"></div></div>
+    <div class="card">
+      <span class="tag">// STOP 10 — THE TROPHY ROOM</span>
+      <h2>🏆 Certifications & Awards</h2>
+      <div class="sub">EARNED, NOT GIVEN</div>
+      <div class="certs">
+        <div class="cert"><span class="tro">🧠</span><h3>Neural Networks & Deep Learning</h3><span class="org">DeepLearning.AI · Coursera</span><span>Jun 2025 · 5U6EGH5O8TMG</span></div>
+        <div class="cert"><span class="tro">🏦</span><h3>Goldman Sachs SWE Job Simulation</h3><span class="org">Forage</span><span>Oct 2024 · mfey7SdxHDNFw2WKt</span></div>
+        <div class="cert"><span class="tro">🥉</span><h3>Bronze Standard</h3><span class="org">Duke of Edinburgh's Intl. Award</span><span>Jan 2023 · ID 12041</span></div>
+        <div class="cert"><span class="tro">🎓</span><h3>Merit Scholarship ×5</h3><span class="org">BRAC University</span><span>2022 – 2026 · consecutive</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11 · CONTACT -->
+  <div class="stop" data-name="FINISH">
+    <div class="signpost"><div class="board">🌙 JOURNEY'S END<small>LET'S CONNECT</small></div><div class="pole"></div></div>
+    <div class="card" style="text-align:center">
+      <span class="tag">// DESTINATION REACHED — KM 11.0 · 12 STOPS CLEARED</span>
+      <h2>Let's Build Something Real</h2>
+      <div class="sub">DHAKA, BANGLADESH · OPEN TO OPPORTUNITIES</div>
+      <p>Thanks for riding along. I'm looking for a team that ships real ML products — someone who digs into hard problems, takes ownership, and keeps learning. The scooter's parked; the inbox is open.</p>
+      <div>
+        <a class="btn solid" href="mailto:prano1112@gmail.com">✉ prano1112@gmail.com</a>
+        <a class="btn" href="https://www.linkedin.com/in/pranto-roy-2a406b349/" target="_blank" rel="noopener">in LINKEDIN</a>
+        <a class="btn" href="https://github.com/Pranto-Roy-10" target="_blank" rel="noopener">⌥ GITHUB</a>
+        <a class="btn gold" href="tel:+8801303599797">📞 +880 1303 599797</a>
+      </div>
+      <a class="btn" style="margin-top:18px" href="index.html">⌂ BACK TO HOME</a>
+    </div>
+  </div>
+</div>
+<script>
+'use strict';
+/* ============ SETUP ============ */
+const STOP_W=1600;
+const world=document.getElementById('world');
+const stops=[...document.querySelectorAll('#stopSrc .stop')];
+stops.forEach((s,i)=>{s.style.left=(i*STOP_W)+'px';world.appendChild(s)});
+document.getElementById('stopSrc').remove();
+const LAST=stops.length-1;
+let cur=0,camX=0,animId=null,pauseT=null,moved=false;
+
+/* ============ DECOR ============ */
+const decor=[['tree',72],['tree pine',86],['lamp',66],['tree',94],['tree pine',63],['lamp',90],['tree',68],['lamp',60],['tree pine',92],['tree',75],['lamp',88],['tree pine',70]];
+stops.forEach((s,i)=>{
+  const [cls,x]=decor[i%decor.length];
+  const d=document.createElement('div');d.className=cls;d.style.left=x+'vw';
+  d.innerHTML=cls.startsWith('tree')?'<div class="top"></div><div class="trunk"></div>':'<div class="pole"></div><div class="head"></div><div class="glow"></div>';
+  s.appendChild(d);
+  if(i%3===0){const t=document.createElement('div');t.className=i%2?'tree pine':'tree';
+    t.style.left='2vw';t.style.transform='scale(.8)';
+    t.innerHTML='<div class="top"></div><div class="trunk"></div>';s.appendChild(t)}
+  for(let k=0;k<3;k++){const g=document.createElement('div');g.className='tuft';
+    g.style.left=(8+((i*37+k*29)%84))+'vw';
+    g.style.animationDelay=(k*.7)+'s';
+    g.style.transform='scale('+(0.8+((i+k)%3)*.25)+')';
+    s.appendChild(g)}
+  /* green zone (stops 3–6): denser forest along the road */
+  if(i>=3&&i<=6){
+    for(let k=0;k<3;k++){
+      const t=document.createElement('div');
+      t.className=(i+k)%2?'tree pine':'tree';
+      t.style.left=(26+((i*17+k*23)%58))+'vw';
+      t.style.transform='scale('+(0.7+((i+k)%3)*.2)+')';
+      t.innerHTML='<div class="top"></div><div class="trunk"></div>';
+      s.appendChild(t);
+    }
+  }
+});
+
+/* ============ SKY / TIME OF DAY ============ */
+const skies=[[document.getElementById('skyDawn'),0],[document.getElementById('skyDay'),.33],
+  [document.getElementById('skySunset'),.66],[document.getElementById('skyNight'),1]];
+const sun=document.getElementById('sun'),moon=document.getElementById('moon'),nstars=document.getElementById('nightStars');
+for(let i=0;i<70;i++){const s=document.createElement('i');
+  s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*55+'vh';
+  s.style.animationDelay=Math.random()*3+'s';
+  s.style.width=s.style.height=(Math.random()*1.6+1)+'px';
+  nstars.appendChild(s)}
+function setSky(p){
+  let nightOp=0;
+  skies.forEach(([el,peak],idx)=>{
+    const op=Math.max(0,1-Math.abs(p-peak)/.3);
+    el.style.opacity=Math.min(1,op*1.4);
+    if(idx===3)nightOp=op;
+  });
+  nstars.style.opacity=Math.min(1,nightOp*1.3);
+  flies.style.opacity=Math.min(1,nightOp*1.2);
+  sun.style.opacity=p<.72?1:Math.max(0,1-(p-.72)/.12);
+  sun.style.transform=`translateY(${p*46}vh)`;
+  moon.style.opacity=Math.max(0,(p-.7)/.3);
+  document.body.classList.toggle('night',nightOp>.45);
+  /* scenery zones — strictly sequential, never two at once:
+     basic mountains (0–.24) → green nature + river (.32–.62) → city lights (.70–1) */
+  const fade=(a,b)=>Math.max(0,Math.min(1,(p-a)/(b-a)));
+  const basic=1-fade(.24,.30);
+  const green=fade(.32,.38)*(1-fade(.62,.68));
+  const city=fade(.70,.76);
+  Lm.style.opacity=basic*.85;
+  Lg.style.opacity=green;
+  Lc.style.opacity=city*.9;
+  river.style.opacity=green;
+  shore.style.opacity=green;
+  bank.style.opacity=green;
+  rail.style.opacity=city*.95;
+  fence.style.opacity=basic;
+}
+/* fireflies (visible at night) */
+const flies=document.getElementById('flies');
+for(let i=0;i<14;i++){const f=document.createElement('span');f.className='flyy';
+  f.style.left=Math.random()*96+'vw';f.style.bottom=Math.random()*80+'%';
+  f.style.animationDelay=(Math.random()*5)+'s';
+  f.style.animationDuration=(4+Math.random()*5)+'s';
+  flies.appendChild(f)}
+/* shooting stars (night only) */
+setInterval(()=>{
+  if(!document.body.classList.contains('night')||Math.random()<.4)return;
+  const s=document.createElement('span');s.className='shoot';
+  s.style.left=(30+Math.random()*60)+'vw';s.style.top=(4+Math.random()*22)+'vh';
+  document.getElementById('scene').appendChild(s);
+  setTimeout(()=>s.remove(),1200);
+},2600);
+/* exhaust puffs while driving */
+setInterval(()=>{
+  if(!document.body.classList.contains('driving'))return;
+  const back=document.body.classList.contains('back');
+  const p=document.createElement('span');p.className='puff'+(back?' rev':'');
+  const mob=innerWidth<=700;
+  p.style.left=back?`calc(${mob?8:16}vw + ${mob?160:230}px)`:`calc(${mob?8:16}vw + 4px)`;
+  document.getElementById('scene').appendChild(p);
+  setTimeout(()=>p.remove(),1000);
+},170);
+
+/* ============ CLOUDS ============ */
+const cloudsC=document.getElementById('clouds'),cloudEls=[];
+for(let i=0;i<6;i++){const c=document.createElement('div');c.className='cloud';
+  c.dataset.x=i*34+Math.random()*20;c.style.top=(5+Math.random()*22)+'vh';
+  c.style.transform='scale('+(0.6+Math.random()*0.9)+')';
+  cloudsC.appendChild(c);cloudEls.push(c)}
+
+/* ============ CAMERA ============ */
+const dashes=document.getElementById('dashes'),Lm=document.getElementById('Lmount'),Lh=document.getElementById('Lhills'),
+  Lc=document.getElementById('Lcity'),Lg=document.getElementById('Lgreen'),
+  river=document.getElementById('river'),bank=document.getElementById('bank'),
+  shore=document.getElementById('shore'),rail=document.getElementById('rail'),fence=document.getElementById('fence');
+const odo=document.getElementById('odo');
+function renderCam(){
+  world.style.transform=`translateX(${-camX}px)`;
+  dashes.style.backgroundPosition=`${-camX}px 0`;
+  Lm.style.backgroundPosition=`${-camX*.22}px bottom`;
+  Lg.style.backgroundPosition=`${-camX*.26}px bottom`;
+  Lc.style.backgroundPosition=`${-camX*.35}px bottom`;
+  Lh.style.backgroundPosition=`${-camX*.5}px bottom`;
+  rail.style.backgroundPosition=`${44-camX}px 5px, ${-camX}px 0`;
+  fence.style.backgroundPosition=`${-camX}px 0`;
+  cloudEls.forEach(c=>{
+    let x=(parseFloat(c.dataset.x)-camX*.008)%140;
+    if(x<-30)x+=140;
+    c.style.left=x+'vw';
+  });
+  setSky(camX/(LAST*STOP_W));
+  odo.textContent='KM '+(camX/STOP_W).toFixed(1);
+}
+
+/* ============ SECTION GATES ============ */
+const SEC=['start','edu','skills','projects','projects','projects','projects','projects','projects','projects','trophies','end'];
+const GATE_TXT={
+  edu:['EDUCATION','🎓 THE CAMPUS'],
+  skills:['SKILLS','⚡ THE SKILL FOREST'],
+  projects:['PROJECTS','📊 7 QUESTS AHEAD'],
+  trophies:['TROPHY ROOM','🏆 CERTIFICATES & AWARDS'],
+  end:["JOURNEY'S END",'🌙 LET US CONNECT']
+};
+const GATES=[{at:.5,sec:'edu'},{at:1.5,sec:'skills'},{at:2.5,sec:'projects'},{at:9.5,sec:'trophies'},{at:10.5,sec:'end'}];
+GATES.forEach(g=>{
+  const d=document.createElement('div');d.className='gate';
+  d.style.left=(g.at*STOP_W)+'px';
+  const [t,s]=GATE_TXT[g.sec];
+  d.innerHTML=`<div class="g-pyl" style="left:12vw"></div><div class="g-pyl" style="right:12vw"></div>
+    <div class="g-wrap"><div class="g-kick">— NOW ENTERING —</div><div class="g-txt">${t}</div><div class="g-sub">${s}</div></div>`;
+  world.appendChild(d);g.el=d;
+});
+
+/* ============ DRIVE ============ */
+function arrive(i){
+  cur=i;
+  stops.forEach((s,j)=>s.classList.toggle('here',j===i));
+  document.body.classList.remove('driving','back');
+  [...pbar.children].forEach((d,j)=>{d.classList.toggle('on',j===i);d.classList.toggle('past',j<i)});
+  document.getElementById('prevB').disabled=i===0;
+  document.getElementById('nextB').disabled=i===LAST;
+  if(i===LAST)startFw();else stopFw();
+}
+function tween(from,to,done){
+  const dur=Math.min(3200,500+Math.abs(to-from)/STOP_W*950);
+  const sc=document.getElementById('scooter');
+  sc.classList.toggle('flip',to<from);
+  document.body.classList.toggle('back',to<from);
+  document.body.classList.add('driving');
+  const t0=performance.now();
+  (function step(t){
+    const p=Math.min(1,(t-t0)/dur);
+    const e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+    camX=from+(to-from)*e;renderCam();
+    if(p<1)animId=requestAnimationFrame(step);
+    else{document.body.classList.remove('driving','back');sc.classList.remove('flip');if(done)done()}
+  })(t0);
+}
+function driveTo(i){
+  i=Math.max(0,Math.min(LAST,i));
+  if(i===cur&&camX===cur*STOP_W&&!pauseT)return;
+  if(!moved){moved=true;
+    document.getElementById('hint').classList.add('dim');
+    document.getElementById('nextB').classList.remove('pulse')}
+  cancelAnimationFrame(animId);
+  clearTimeout(pauseT);pauseT=null;
+  GATES.forEach(g=>g.el.classList.remove('lit'));
+  stops[cur].classList.remove('here');stopFw();
+  const from=camX,to=i*STOP_W;
+  cur=i;
+  /* riding forward into a new section? pause at its gate first */
+  const gate=to>from?GATES.find(g=>{const gx=g.at*STOP_W;return gx>from&&gx<to&&g.sec===SEC[i]}):null;
+  if(gate){
+    const gx=gate.at*STOP_W;
+    tween(from,gx,()=>{
+      gate.el.classList.add('lit');
+      pauseT=setTimeout(()=>{
+        pauseT=null;gate.el.classList.remove('lit');
+        tween(gx,to,()=>arrive(i));
+      },2000);
+    });
+  }else tween(from,to,()=>arrive(i));
+}
+function go(d){driveTo(cur+d)}
+
+/* ============ PROGRESS BAR ============ */
+const pbar=document.getElementById('pbar');
+stops.forEach((s,i)=>{
+  const d=document.createElement('button');d.className='pdot';
+  d.dataset.n=(i+1)+' · '+s.dataset.name;
+  d.onclick=()=>driveTo(i);
+  pbar.appendChild(d);
+});
+
+/* ============ COMPANIONS: eyes follow the cursor ============ */
+addEventListener('mousemove',e=>{
+  document.querySelectorAll('.buddy svg').forEach(svg=>{
+    const r=svg.getBoundingClientRect();
+    const cx=r.left+r.width*.7,cy=r.top+r.height*.4;
+    const dx=Math.max(-3,Math.min(3,(e.clientX-cx)/60));
+    const dy=Math.max(-2,Math.min(2.5,(e.clientY-cy)/60));
+    svg.querySelectorAll('.pup').forEach(p=>p.style.transform=`translate(${dx}px,${dy}px)`);
+  });
+});
+
+/* ============ BIRDS ============ */
+function spawnBird(){
+  if(document.querySelectorAll('.bird').length>=5)return;
+  const b=document.createElement('div');b.className='bird';
+  b.style.top=(5+Math.random()*28)+'vh';
+  const dur=13+Math.random()*10,sc=.5+Math.random()*.8;
+  b.style.animation=`flyAcross ${dur}s linear forwards`;
+  b.innerHTML=`<svg viewBox="0 0 46 26" style="transform:scale(${sc})">
+    <ellipse cx="23" cy="15" rx="9" ry="5" fill="#1e2547"/>
+    <circle cx="32" cy="12" r="4" fill="#1e2547"/><path d="M35 11 l6 1.5 -6 1.5Z" fill="#ffd166"/>
+    <path class="wingL" d="M22 13 Q10 2 2 8 Q10 12 20 16 Z" fill="#2c3766"/>
+    <path class="wingR" d="M24 13 Q36 2 44 8 Q36 12 26 16 Z" fill="#2c3766"/>
+    <circle cx="33" cy="11" r="1" fill="#fff"/>
+  </svg>`;
+  document.getElementById('scene').appendChild(b);
+  setTimeout(()=>b.remove(),dur*1000+200);
+}
+setInterval(()=>{if(Math.random()<.75)spawnBird()},3800);
+spawnBird();setTimeout(spawnBird,1500);
+
+/* ============ FIREWORKS (finale) ============ */
+let fwT=null;
+const FW_COLORS=['#00e5ff','#ff4d9d','#ffd166','#34f5c5','#a78bfa'];
+function startFw(){
+  if(fwT)return;
+  fwT=setInterval(()=>{
+    const f=document.createElement('span');f.className='fw';
+    f.style.left=(35+Math.random()*55)+'vw';f.style.top=(6+Math.random()*30)+'vh';
+    f.style.color=FW_COLORS[Math.floor(Math.random()*FW_COLORS.length)];
+    document.getElementById('scene').appendChild(f);
+    setTimeout(()=>f.remove(),1400);
+  },700);
+}
+function stopFw(){clearInterval(fwT);fwT=null}
+
+/* ============ TRANSCRIPT MODAL ============ */
+const tModal=document.getElementById('transcriptModal');
+document.getElementById('transcriptBtn').addEventListener('click',()=>{
+  tModal.classList.add('open');tModal.setAttribute('aria-hidden','false');
+});
+function closeModal(){tModal.classList.remove('open');tModal.setAttribute('aria-hidden','true')}
+tModal.addEventListener('click',e=>{if(e.target.hasAttribute('data-close'))closeModal()});
+
+/* ============ INPUT ============ */
+addEventListener('keydown',e=>{
+  if(['ArrowRight','ArrowLeft','ArrowUp','ArrowDown',' '].includes(e.key))e.preventDefault();
+  if(e.key==='Escape'){closeModal();return}
+  if(tModal.classList.contains('open'))return;
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')go(1);
+  else if(e.key==='ArrowLeft'||e.key==='PageUp')go(-1);
+  else if(e.key==='Home')driveTo(0);
+  else if(e.key==='End')driveTo(LAST);
+});
+let tx=null;
+addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
+addEventListener('touchend',e=>{
+  if(tx===null)return;
+  const dx=e.changedTouches[0].clientX-tx;tx=null;
+  if(Math.abs(dx)>45)go(dx<0?1:-1);
+},{passive:true});
+
+/* ============ INIT ============ */
+renderCam();arrive(0);
+</script>
+</body>
+</html>

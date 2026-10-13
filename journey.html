@@ -250,6 +250,9 @@ body.driving .cat-tail{animation-duration:.6s}
 .tr-t td:nth-child(2),.tr-t td:nth-child(3),.tr-t th:nth-child(2),.tr-t th:nth-child(3){text-align:right}
 .tr-t tr.hi td{color:var(--gold)}
 .tr-t tr.hi td:first-child::after{content:" ★";font-size:.6rem}
+.tr-t td:nth-child(4),.tr-t th:nth-child(4){text-align:right}
+.hon{display:inline-block;font-size:.58rem;letter-spacing:.08em;padding:2px 8px;border-radius:999px;border:1px solid rgba(0,229,255,.4);color:var(--cyan);white-space:nowrap}
+.hon.vc{border-color:rgba(255,209,102,.55);color:var(--gold);background:rgba(255,209,102,.08)}
 .ts-note{margin-top:14px;color:var(--muted);font-size:.86rem;line-height:1.6}
 
 /* ============ UPGRADED SCENERY ============ */
@@ -492,20 +495,21 @@ body.night #fence{filter:brightness(.55)}
     <div class="ts-row"><span>Programme</span><b>B.Sc. in Computer Science & Engineering</b></div>
     <div class="ts-row"><span>Credits earned</span><b>136.00 · Graduated 2026</b></div>
     <div class="ts-row"><span>Scholarships</span><b>5× consecutive merit awards</b></div>
+    <div class="ts-row"><span>Academic honours</span><b>2× VC's List · 5× Dean's List</b></div>
     <table class="tr-t">
-      <tr><th>SEMESTER</th><th>GPA</th><th>CGPA</th></tr>
-      <tr class="hi"><td>Summer 2022</td><td>4.00</td><td>4.00</td></tr>
-      <tr><td>Fall 2022</td><td>3.85</td><td>3.88</td></tr>
-      <tr><td>Spring 2023</td><td>3.68</td><td>3.79</td></tr>
-      <tr><td>Summer 2023</td><td>3.85</td><td>3.81</td></tr>
-      <tr><td>Fall 2023</td><td>3.50</td><td>3.74</td></tr>
-      <tr><td>Spring 2024</td><td>3.68</td><td>3.72</td></tr>
-      <tr><td>Summer 2024</td><td>3.93</td><td>3.76</td></tr>
-      <tr><td>Fall 2024</td><td>3.85</td><td>3.77</td></tr>
-      <tr><td>Spring 2025</td><td>3.78</td><td>3.77</td></tr>
-      <tr class="hi"><td>Summer 2025</td><td>4.00</td><td>3.80</td></tr>
-      <tr><td>Fall 2025</td><td>3.81</td><td>3.80</td></tr>
-      <tr class="hi"><td>Spring 2026</td><td>4.00</td><td>3.81</td></tr>
+      <tr><th>SEMESTER</th><th>GPA</th><th>CGPA</th><th>HONOUR</th></tr>
+      <tr class="hi"><td>Summer 2022</td><td>4.00</td><td>4.00</td><td></td></tr>
+      <tr><td>Fall 2022</td><td>3.85</td><td>3.88</td><td><span class="hon">DEAN'S LIST</span></td></tr>
+      <tr><td>Spring 2023</td><td>3.68</td><td>3.79</td><td></td></tr>
+      <tr><td>Summer 2023</td><td>3.85</td><td>3.81</td><td><span class="hon">DEAN'S LIST</span></td></tr>
+      <tr><td>Fall 2023</td><td>3.50</td><td>3.74</td><td></td></tr>
+      <tr><td>Spring 2024</td><td>3.68</td><td>3.72</td><td></td></tr>
+      <tr><td>Summer 2024</td><td>3.93</td><td>3.76</td><td><span class="hon vc">VC'S LIST</span></td></tr>
+      <tr><td>Fall 2024</td><td>3.85</td><td>3.77</td><td><span class="hon">DEAN'S LIST</span></td></tr>
+      <tr><td>Spring 2025</td><td>3.78</td><td>3.77</td><td><span class="hon">DEAN'S LIST</span></td></tr>
+      <tr class="hi"><td>Summer 2025</td><td>4.00</td><td>3.80</td><td><span class="hon vc">VC'S LIST</span></td></tr>
+      <tr><td>Fall 2025</td><td>3.81</td><td>3.80</td><td><span class="hon">DEAN'S LIST</span></td></tr>
+      <tr class="hi"><td>Spring 2026</td><td>4.00</td><td>3.81</td><td></td></tr>
     </table>
     <p class="ts-note">Straight A's in Neural Networks, Artificial Intelligence, Cryptography, Computer Networks, Algorithms, Operating Systems, Computer Architecture & Graphics — the exact stack this portfolio is built on.</p>
     <a class="btn solid" href="transcript.pdf" target="_blank" rel="noopener">📜 OPEN OFFICIAL GRADE SHEET (PDF)</a>
@@ -524,7 +528,7 @@ body.night #fence{filter:brightness(.55)}
           <span class="tag">// PLAYER FOUND</span>
           <h2>Pranto Roy</h2>
           <div class="sub">ML ENGINEER · FULL-STACK DEV · SECURITY ENGINEER</div>
-          <p>I'm Pranto, a CSE graduate from BRAC University with a 3.81 CGPA and five merit scholarships that had to be re-earned every year, now a Junior Software Engineer at Development Design Consultants Ltd. I build things to understand them: my own neural network architecture that beat VAEs, and a medical platform where I implemented the cryptography myself. The road ahead goes through everything I've made.</p>
+          <p>I'm Pranto, a CSE graduate from BRAC University with a 3.81 CGPA and five merit scholarships that had to be re-earned every year, plus 2× Vice-Chancellor's List and 5× Dean's List honours, now a Junior Software Engineer at Development Design Consultants Ltd. I build things to understand them: my own neural network architecture that beat VAEs, and a medical platform where I implemented the cryptography myself. The road ahead goes through everything I've made.</p>
           <div class="mini-stats">
             <div class="ms"><b>3.81</b><span>CGPA</span></div>
             <div class="ms"><b>5×</b><span>SCHOLARSHIPS</span></div>
@@ -545,6 +549,7 @@ body.night #fence{filter:brightness(.55)}
       <p><b style="color:var(--text)">B.Sc. in Computer Science & Engineering</b><br>BRAC University, Dhaka · 2022 – 2026 (graduated) · <b style="color:var(--cyan)">CGPA 3.81 / 4.00</b></p>
       <ul>
         <li>5× consecutive merit-based scholarship recipient · 136 credits</li>
+        <li><b style="color:var(--gold)">2× Vice-Chancellor's List</b> (Summer 2024, Summer 2025) · <b style="color:var(--cyan)">5× Dean's List</b> (Fall 2022, Summer 2023, Fall 2024, Spring 2025, Fall 2025)</li>
         <li><b style="color:var(--gold)">A+ in CSE400 Project &amp; Thesis</b> — highest grade awarded for the final-year research component</li>
         <li>Perfect 4.00 GPA in Summer 2025 and Spring 2026</li>
         <li>Straight A's in Neural Networks, AI, Cryptography, Computer Networks & Algorithms</li>
@@ -904,6 +909,8 @@ body.night #fence{filter:brightness(.55)}
       <h2>🏆 Certifications & Awards</h2>
       <div class="sub">EARNED, NOT GIVEN</div>
       <div class="certs">
+        <div class="cert"><span class="tro">👑</span><h3>Vice-Chancellor's List ×2</h3><span class="org">BRAC University</span><span>Summer 2024 · Summer 2025</span></div>
+        <div class="cert"><span class="tro">📜</span><h3>Dean's List ×5</h3><span class="org">BRAC University</span><span>Fall '22 · Summer '23 · Fall '24 · Spring '25 · Fall '25</span></div>
         <div class="cert"><span class="tro">🏅</span><h3>Best Project Award — Nominee</h3><span class="org">BRAC University · LifeLine</span><span>2026 · technical execution & social impact</span></div>
         <div class="cert"><span class="tro">🧠</span><h3>Neural Networks & Deep Learning</h3><span class="org">DeepLearning.AI · Coursera</span><span>Jun 2025 · 5U6EGH5O8TMG</span></div>
         <div class="cert"><span class="tro">🏦</span><h3>Goldman Sachs SWE Job Simulation</h3><span class="org">Forage</span><span>Oct 2024 · mfey7SdxHDNFw2WKt</span></div>

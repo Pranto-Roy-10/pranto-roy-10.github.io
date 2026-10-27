@@ -225,6 +225,65 @@ body.driving .cat-tail{animation-duration:.6s}
 @keyframes burst{0%{transform:scale(.2);opacity:1;box-shadow:0 0 0 0 currentColor}60%{opacity:1}
   100%{transform:scale(1);opacity:0;box-shadow:0 -46px 0 -1px currentColor,33px -33px 0 -1px currentColor,46px 0 0 -1px currentColor,33px 33px 0 -1px currentColor,0 46px 0 -1px currentColor,-33px 33px 0 -1px currentColor,-46px 0 0 -1px currentColor,-33px -33px 0 -1px currentColor}}
 
+/* ============ ENDING (3D) ============ */
+#scene{transition:transform 1.6s cubic-bezier(.6,0,.2,1),filter 1.6s ease}
+body.ending #scene{transform:scale(1.6);transform-origin:24% 84%;filter:blur(5px) brightness(.35)}
+body.ending #topbar,body.ending .navbtn,body.ending #hint{opacity:0;pointer-events:none;transition:opacity .6s}
+#ending{position:fixed;inset:0;z-index:40;display:none;opacity:0;transition:opacity 1.2s ease;background:#0b0f26}
+#ending.show{opacity:1}
+#e3canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ending .lb{position:absolute;left:0;right:0;height:9vh;background:#000;transition:transform 1.4s cubic-bezier(.6,0,.2,1);z-index:2}
+#ending .lb.t{top:0;transform:translateY(-100%)}#ending .lb.b{bottom:0;transform:translateY(100%)}
+#ending.show .lb{transform:none}#ending.final .lb{transform:translateY(-100%)}#ending.final .lb.b{transform:translateY(100%)}
+#ending .cap{position:absolute;left:0;right:0;bottom:12vh;text-align:center;z-index:3;font-family:var(--fm);letter-spacing:.32em;
+  font-size:clamp(.66rem,1.6vw,.85rem);color:#dfe7ff;text-shadow:0 2px 14px #000;opacity:0;transform:translateY(8px);transition:opacity 1.1s,transform 1.1s;padding:0 16px}
+#ending.cap1 .cap.c1,#ending.cap2 .cap.c2{opacity:1;transform:none}
+#e3skip{position:absolute;top:calc(9vh + 14px);right:18px;z-index:4;font-family:var(--fm);font-size:.7rem;letter-spacing:.2em;color:#c9d4f5;
+  background:rgba(8,12,30,.55);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:8px 16px;cursor:pointer;transition:opacity .6s}
+#e3skip:hover{color:var(--cyan);border-color:var(--cyan)}
+#ending.final #e3skip{opacity:0;pointer-events:none}
+#e3panel{position:absolute;left:50%;bottom:5vh;transform:translate(-50%,20px);z-index:4;width:min(640px,calc(100% - 32px));text-align:center;
+  opacity:0;pointer-events:none;transition:opacity 1.4s ease .2s,transform 1.4s ease .2s}
+#ending.final #e3panel{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+#e3panel .k{font-family:var(--fm);font-size:.66rem;letter-spacing:.34em;color:var(--gold);text-shadow:0 2px 10px #000}
+#e3panel h2{font-family:var(--fd);font-weight:800;font-size:clamp(1.3rem,4vw,2.1rem);letter-spacing:.06em;margin:8px 0 6px;color:#f1f4ff;text-shadow:0 4px 24px rgba(0,0,0,.8)}
+#e3panel p{color:#c3cdea;font-size:.92rem;line-height:1.55;text-shadow:0 2px 12px #000;margin-bottom:4px}
+#e3panel .row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+#e3panel .btn{backdrop-filter:blur(6px);background:rgba(8,12,30,.55)}
+#e3panel .btn.solid{background:linear-gradient(90deg,var(--cyan),var(--purple))}
+#e3panel .sm{margin-top:12px;display:flex;gap:14px;justify-content:center}
+#e3panel .sm button{font-family:var(--fm);font-size:.68rem;letter-spacing:.18em;color:#aab6d4;background:none;border:none;cursor:pointer;padding:6px}
+#e3panel .sm button:hover{color:var(--cyan)}
+#ending .e3nav{position:absolute;bottom:calc(9vh + 18px);z-index:5;width:54px;height:54px;border-radius:50%;font-size:1.2rem;cursor:pointer;
+  color:var(--cyan);background:rgba(8,12,30,.6);border:1px solid rgba(0,229,255,.45);backdrop-filter:blur(6px);transition:opacity .4s,transform .2s,box-shadow .2s}
+#ending .e3nav:hover{transform:scale(1.08);box-shadow:0 0 18px rgba(0,229,255,.45)}
+#ending .e3nav:disabled{opacity:.25;cursor:default;transform:none;box-shadow:none}
+#e3prev{left:18px}#e3next{right:18px}
+#ending.final .e3nav{bottom:18px}
+#ending.rev #e3skip{opacity:0;pointer-events:none}
+.navbtn.to-end{color:#1a1205;background:radial-gradient(circle at 35% 30%,#fff3c4,#ffd166 60%,#e0a93a);border-color:#ffe39a;
+  box-shadow:0 0 22px rgba(255,209,102,.7),0 0 60px rgba(167,139,250,.35);animation:toEnd 1.6s ease-in-out infinite}
+.navbtn.to-end::before,.navbtn.to-end::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid rgba(255,209,102,.7);
+  animation:ripple 2s ease-out infinite;pointer-events:none}
+.navbtn.to-end::after{animation-delay:1s}
+@keyframes ripple{from{transform:scale(1);opacity:.9}to{transform:scale(2.1);opacity:0}}
+@keyframes toEnd{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+#endTease{position:fixed;right:22px;bottom:calc(var(--road-h) + 2vh + 74px);z-index:24;pointer-events:none;text-align:right;
+  font-family:var(--fm);background:rgba(10,12,32,.82);border:1px solid rgba(255,209,102,.55);border-radius:14px 14px 4px 14px;padding:10px 14px;
+  box-shadow:0 8px 30px rgba(0,0,0,.45),0 0 22px rgba(255,209,102,.18);backdrop-filter:blur(6px);
+  opacity:0;transform:translateY(10px) scale(.95);transform-origin:100% 100%;transition:opacity .6s ease .9s,transform .6s cubic-bezier(.2,1.4,.4,1) .9s}
+#endTease span{display:block;font-size:.62rem;letter-spacing:.14em;color:#c3cdea}
+#endTease b{display:block;margin-top:4px;font-size:.78rem;letter-spacing:.22em;color:var(--gold)}
+#endTease::after{content:"";position:absolute;right:18px;bottom:-7px;width:12px;height:12px;background:rgba(10,12,32,.82);
+  border-right:1px solid rgba(255,209,102,.55);border-bottom:1px solid rgba(255,209,102,.55);transform:rotate(45deg)}
+body.at-end:not(.driving) #endTease{opacity:1;transform:none;animation:teaseBob 2.4s ease-in-out 1.6s infinite}
+@keyframes teaseBob{0%,100%{translate:0 0}50%{translate:0 -5px}}
+body.ending #endTease{opacity:0!important;transition:opacity .3s}
+.card .tease{margin-top:14px;font-family:var(--fm);font-size:.72rem;letter-spacing:.12em;color:var(--gold);opacity:.9}
+.card .tease b{display:inline-block;animation:toEnd 1.6s ease-in-out infinite}
+@media(max-width:700px){#endTease{right:12px;bottom:calc(var(--road-h) + 2vh + 66px)}.card .tease{display:none}}
+@media(max-width:700px){#ending .lb{height:7vh}#ending .e3nav{width:46px;height:46px;bottom:calc(7vh + 12px)}#ending.final .e3nav{bottom:auto;top:12px}#e3skip{top:calc(7vh + 10px)}#e3panel p{font-size:.84rem}}
+
 /* ============ TRANSCRIPT MODAL ============ */
 .modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:20px;
   background:rgba(2,3,12,.72);backdrop-filter:blur(6px)}
@@ -484,6 +543,28 @@ body.night #fence{filter:brightness(.55)}
 <button class="navbtn pulse" id="nextB" onclick="go(1)" aria-label="next stop">▶</button>
 <div id="hint">→ PRESS RIGHT ARROW OR ▶ TO RIDE · CLICK DOTS TO JUMP</div>
 <div id="fadeIn"></div>
+<div id="endTease" aria-hidden="true"><span>the road doesn't really end here…</span><b>ride to the moon ▶</b></div>
+<div id="ending" aria-label="Ending">
+  <canvas id="e3canvas" aria-hidden="true"></canvas>
+  <div class="lb t"></div><div class="lb b"></div>
+  <div class="cap c1">KM 13.0 · THE ROAD ENDS HERE</div>
+  <div class="cap c2">SOME VIEWS YOU HAVE TO WALK TO</div>
+  <button id="e3skip" type="button">SKIP ▸</button>
+  <button class="e3nav" id="e3prev" type="button" aria-label="go back to the road">◀</button>
+  <button class="e3nav" id="e3next" type="button" aria-label="continue">▶</button>
+  <div id="e3panel">
+    <div class="k">// JOURNEY COMPLETE · 14 STOPS CLEARED</div>
+    <h2>The next stop isn't built yet.</h2>
+    <p>Thanks for riding along. Let's build it together.</p>
+    <div class="row">
+      <a class="btn solid" href="mailto:prano1112@gmail.com">✉ EMAIL ME</a>
+      <a class="btn" href="https://www.linkedin.com/in/pranto-roy-2a406b349/" target="_blank" rel="noopener">in LINKEDIN</a>
+      <a class="btn" href="https://github.com/Pranto-Roy-10" target="_blank" rel="noopener">⌥ GITHUB</a>
+      <a class="btn gold" href="tel:+8801303599797">📞 CALL</a>
+    </div>
+    <div class="sm"><button id="e3replay" type="button">↺ REPLAY</button><button id="e3back" type="button">↩ BACK TO THE ROAD</button><a href="index.html" style="font-family:var(--fm);font-size:.68rem;letter-spacing:.18em;color:#aab6d4;padding:6px">⌂ HOME</a></div>
+  </div>
+</div>
 <div id="transcriptModal" class="modal" aria-hidden="true">
   <div class="modal-backdrop" data-close></div>
   <div class="modal-card" role="dialog" aria-modal="true">
@@ -938,6 +1019,7 @@ body.night #fence{filter:brightness(.55)}
         <a class="btn gold" href="tel:+8801303599797">📞 +880 1303 599797</a>
       </div>
       <a class="btn" style="margin-top:18px" href="index.html">⌂ BACK TO HOME</a>
+      <p class="tease">🌙 Psst… the road doesn't really end here. Press <b>▶</b></p>
     </div>
   </div>
 </div>
@@ -1124,8 +1206,11 @@ function arrive(i){
   document.body.classList.remove('driving','back');
   [...pbar.children].forEach((d,j)=>{d.classList.toggle('on',j===i);d.classList.toggle('past',j<i)});
   document.getElementById('prevB').disabled=i===0;
-  document.getElementById('nextB').disabled=i===LAST;
+  document.getElementById('nextB').disabled=false;                 // on the last stop ▶ opens the 3D ending
+  document.getElementById('nextB').classList.toggle('to-end',i===LAST);
+  document.body.classList.toggle('at-end',i===LAST);
   if(i===LAST)startFw();else stopFw();
+  if(i>=LAST-2&&window.preloadEnding)preloadEnding();
 }
 function tween(from,to,done){
   const dur=Math.min(3200,500+Math.abs(to-from)/STOP_W*950);
@@ -1151,7 +1236,7 @@ function driveTo(i){
   cancelAnimationFrame(animId);
   clearTimeout(pauseT);pauseT=null;
   GATES.forEach(g=>g.el.classList.remove('lit'));
-  stops[cur].classList.remove('here');stopFw();
+  stops[cur].classList.remove('here');stopFw();document.body.classList.remove('at-end');window.cancelQueuedEnding&&cancelQueuedEnding();
   const from=camX,to=i*STOP_W;
   cur=i;
   /* riding forward into a new section? pause at its gate first */
@@ -1167,7 +1252,9 @@ function driveTo(i){
     });
   }else tween(from,to,()=>arrive(i));
 }
-function go(d){driveTo(cur+d)}
+function go(d){
+  if(d>0&&cur===LAST&&!pauseT&&camX===cur*STOP_W&&window.playEnding){playEnding();return}
+  driveTo(cur+d)}
 
 /* ============ PROGRESS BAR ============ */
 const pbar=document.getElementById('pbar');
@@ -1252,6 +1339,672 @@ addEventListener('touchend',e=>{
 
 /* ============ INIT ============ */
 renderCam();arrive(0);
+</script>
+<script>
+/* =====================================================================
+   ENDING — 3D third-person: park, walk up the mountainside, sit at the
+   edge and look at the moon. three.js r128 is loaded only when needed.
+   ===================================================================== */
+var E3={open:false,built:false,loading:null,auto:false,raf:0,t:0,clock:0,last:0,closing:0};
+(function(){
+const THREE_URL='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+const T={rideEnd:3.6,dis0:3.75,dis1:4.85,walk0:5.0,sitStart:13.5,sitEnd:15.1,orbit0:4.1,orbitEnd:8.4,camStart:13.1,camEnd:18.3,panel:17.3,end:18.3};
+const ss=(a,b,x)=>{x=Math.min(1,Math.max(0,(x-a)/(b-a)));return x*x*(3-2*x)};
+const lerp=(a,b,k)=>a+(b-a)*k;
+const clamp01=x=>Math.min(1,Math.max(0,x));
+
+/* ---------- terrain ---------- */
+function hash(i,j){let h=(Math.imul(i,374761393)+Math.imul(j,668265263))|0;h=Math.imul(h^(h>>>13),1274126177);return((h^(h>>>16))>>>0)/4294967296}
+function vnoise(x,z){const i=Math.floor(x),j=Math.floor(z),fx=x-i,fz=z-j,u=fx*fx*(3-2*fx),v=fz*fz*(3-2*fz);
+  const a=hash(i,j),b=hash(i+1,j),c=hash(i,j+1),d=hash(i+1,j+1);return lerp(lerp(a,b,u),lerp(c,d,u),v)}
+function fbm(x,z,o){let s=0,a=.5,f=1;for(let k=0;k<(o||5);k++){s+=a*vnoise(x*f,z*f);a*=.5;f*=2.03}return s}
+const EDGE=-32;                        // cliff edge (on a grid line, so the mesh keeps a crisp lip)
+function H(x,z){
+  const ax=Math.abs(x);
+  let base=z>EDGE?-z*.32:-EDGE*.32-(EDGE-z)*2.2;          // climb to the edge, then a steep drop
+  if(z<EDGE-4)base=-EDGE*.32-8.8-(EDGE-4-z)*.9;
+  base=Math.max(base,-48);                                // valley floor
+  const corridor=z>EDGE-1?ss(2.5,16,ax):1;                // smooth footpath near x=0
+  let h=base+(fbm(x*.03+7,z*.03+3)-.5)*20*corridor+(fbm(x*.13,z*.13)-.5)*2.4*corridor;
+  h+=Math.pow(ss(8,90,ax),1.6)*34*(z>EDGE?1:.6);          // valley walls on both sides
+  const far=ss(-190,-300,z);                              // the far range the moon rises behind
+  const gap=.4+.6*ss(0,70,Math.abs(x-6));
+  h+=far*(fbm(x*.011+2,z*.011)*190-25)*gap;
+  return h;
+}
+function groundY(x,z){                                    // exactly the terrain mesh's surface: same grid, same triangle split
+  const x0=Math.floor((x+450)/4)*4-450,z0=Math.floor((z+560)/2)*2-560,u=(x-x0)/4,v=(z-z0)/2;
+  const ha=H(x0,z0),hb=H(x0,z0+2),hc=H(x0+4,z0+2),hd=H(x0+4,z0);
+  return u+v<=1?ha+(hd-ha)*u+(hb-ha)*v:hc+(hb-hc)*(1-u)+(hd-hc)*(1-v);
+}
+
+/* ---------- helpers ---------- */
+let THREE_,scene,camera,renderer,sky,stars,moon,moonGlow,meteor,sun;
+const moonDir={x:.012,y:.215,z:-1};
+function mat(c,o){return new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.9,metalness:0,flatShading:true},o||{}))}
+function cyl(r1,r2,h,m,seg){const g=new THREE.CylinderGeometry(r1,r2,h,seg||8);g.translate(0,-h/2,0);return new THREE.Mesh(g,m)} // hangs down from pivot
+function canvasTex(sz,draw){const c=document.createElement('canvas');c.width=c.height=sz;draw(c.getContext('2d'),sz);const t=new THREE.CanvasTexture(c);return t}
+
+/* ---------- characters (local frame faces +z; roots are yawed to face the moon) ---------- */
+function smat(c,o){return new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.72,metalness:0},o||{}))}
+/* capsule hanging down from its pivot: top sphere (radius rt) centred on the pivot, bottom sphere (rb) at -len — joints never gap */
+function capsule(rt,rb,len,m,seg){
+  const pts=[],n=8;
+  for(let i=0;i<=n;i++){const a=-Math.PI/2+i/n*Math.PI/2;pts.push(new THREE.Vector2(Math.max(1e-4,rb*Math.cos(a)),-len+rb*Math.sin(a)))}
+  for(let i=0;i<=n;i++){const a=i/n*Math.PI/2;pts.push(new THREE.Vector2(Math.max(1e-4,rt*Math.cos(a)),rt*Math.sin(a)))}
+  return new THREE.Mesh(new THREE.LatheGeometry(pts,seg||14),m);
+}
+function sph(r,m,sx,sy,sz,ws){const s=new THREE.Mesh(new THREE.SphereGeometry(r,ws||20,ws?Math.max(6,ws*.7|0):14),m);s.scale.set(sx||1,sy||1,sz||1);return s}
+/* tube along a curve that tapers from r0 to r1 */
+function taperTube(pts,r0,r1,m){
+  const curve=new THREE.CatmullRomCurve3(pts),T=24,R=8,g=new THREE.TubeGeometry(curve,T,1,R,false),p=g.attributes.position;
+  for(let i=0;i<=T;i++){const c=curve.getPointAt(i/T),r=lerp(r0,r1,Math.pow(i/T,1.2));
+    for(let j=0;j<=R;j++){const k=i*(R+1)+j;p.setXYZ(k,c.x+(p.getX(k)-c.x)*r,c.y+(p.getY(k)-c.y)*r,c.z+(p.getZ(k)-c.z)*r)}}
+  g.computeVertexNormals();
+  const tip=sph(r1*1.02,m);tip.position.copy(curve.getPointAt(1));
+  const grp=new THREE.Group();grp.add(new THREE.Mesh(g,m),tip);return grp;
+}
+
+function makePerson(){
+  const jacket=smat(0x2b3670,{roughness:.62}),jacketDk=smat(0x1d2550),jeans=smat(0x232c55,{roughness:.85}),skin=smat(0xe2b48a,{roughness:.6}),
+        helm=smat(0x19d3f0,{roughness:.28,metalness:.15}),visor=smat(0x0a1230,{roughness:.08,metalness:.7,emissive:0x0b2a40,emissiveIntensity:.35}),
+        white=smat(0xeef1ff,{roughness:.5}),sole=smat(0xcfd6ee),accent=smat(0x19d3f0,{roughness:.4,emissive:0x0a5a6a,emissiveIntensity:.25}),pack=smat(0x161b3a,{roughness:.8});
+  const root=new THREE.Group(),hips=new THREE.Group();hips.position.y=.96;root.add(hips);
+  const pelvis=sph(.17,jeans,1.05,.62,.78);pelvis.position.y=.02;hips.add(pelvis);
+  const torso=new THREE.Group();torso.position.y=.04;hips.add(torso);
+  /* jacket: lathe profile, flattened front-to-back */
+  const prof=[[.001,-.02],[.185,-.02],[.2,.04],[.205,.14],[.215,.28],[.235,.42],[.235,.5],[.2,.57],[.12,.62],[.07,.64],[.001,.645]].map(([x,y])=>new THREE.Vector2(x,y));
+  const body=new THREE.Mesh(new THREE.LatheGeometry(prof,24),jacket);body.scale.z=.74;torso.add(body);
+  const hem=new THREE.Mesh(new THREE.TorusGeometry(.19,.022,8,28),jacketDk);hem.rotation.x=Math.PI/2;hem.scale.y=.74;hem.position.y=.0;torso.add(hem);
+  const zip=new THREE.Mesh(new THREE.BoxGeometry(.016,.52,.01),accent);zip.position.set(0,.3,.165);zip.rotation.x=-.06;torso.add(zip);
+  const collar=new THREE.Mesh(new THREE.TorusGeometry(.085,.03,8,20),jacketDk);collar.rotation.x=Math.PI/2;collar.position.y=.63;torso.add(collar);
+  /* backpack with straps and a little status light */
+  const bp=capsule(.11,.11,.2,pack,12);bp.scale.set(1.25,1,.62);bp.position.set(0,.5,-.24);torso.add(bp);   // rests against his back
+  const flap=sph(.12,pack,1.2,.5,.6);flap.position.set(0,.5,-.25);torso.add(flap);
+  const led=sph(.016,new THREE.MeshBasicMaterial({color:0x34f5c5}),1,1,1,8);led.position.set(.07,.36,-.315);torso.add(led);
+  /* shoulder straps routed over the jacket surface: bag top -> over the shoulder -> down the chest -> under the arm -> bag bottom */
+  { const P2=prof.map(v=>[v.x,v.y]);
+    const rAt=y=>{for(let i=1;i<P2.length;i++){const[a0,b0]=P2[i-1],[a1,b1]=P2[i];if(y>=b0&&y<=b1)return a0+(a1-a0)*(y-b0)/((b1-b0)||1)}return 0};
+    const zOut=(x,y,m)=>.74*Math.sqrt(Math.max(0,rAt(y)**2-x*x))+(m||.024);                // just outside the (flattened) jacket
+    const top=x=>{for(let y=.645;y>.4;y-=.002)if(rAt(y)>=x+.01)return y;return .6};
+    const strapM=smat(0x10142e,{roughness:.6}),buckM=smat(0xcfd6ee,{roughness:.3,metalness:.7});
+    [-1,1].forEach(sd=>{const v=(x,y,z)=>new THREE.Vector3(sd*x,y,z);
+      const pts=[v(.1,.6,-.235),v(.125,top(.125)+.02,-.07),v(.125,top(.125)+.016,.05),v(.125,.5,zOut(.125,.5)),v(.135,.38,zOut(.135,.38)),
+                 v(.19,.27,zOut(.19,.27)),v(.19,.25,-zOut(.19,.25)),v(.11,.32,-.235)];
+      torso.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),48,.016,6,false),strapM));
+      const bk=new THREE.Mesh(new THREE.BoxGeometry(.05,.035,.02),buckM);bk.position.set(sd*.128,.44,zOut(.128,.44,.034));bk.rotation.y=sd*.25;torso.add(bk)});
+  }
+  /* head + full-face helmet */
+  const head=new THREE.Group();head.position.y=.64;torso.add(head);
+  const neck=capsule(.055,.06,.07,skin,10);neck.position.y=.07;head.add(neck);
+  const hel=sph(.165,helm,1,1.04,1.08,28);hel.position.set(0,.17,0);head.add(hel);
+  const vis=new THREE.Mesh(new THREE.SphereGeometry(.168,28,16,Math.PI*.14,Math.PI*.72,Math.PI*.36,Math.PI*.3),visor);vis.position.set(0,.17,.008);vis.scale.set(1.01,1.05,1.1);head.add(vis);
+  const stripe=new THREE.Mesh(new THREE.TorusGeometry(.168,.012,6,40,Math.PI),white);stripe.rotation.set(0,Math.PI/2,0);stripe.position.y=.17;stripe.scale.set(1.08,1.04,1);head.add(stripe);
+  const chin=new THREE.Mesh(new THREE.TorusGeometry(.12,.035,8,20,Math.PI),helm);chin.rotation.set(Math.PI/2,0,Math.PI);chin.position.set(0,.06,.015);chin.scale.set(1,1.15,1);head.add(chin);
+  const arm=side=>{
+    const sh=new THREE.Group();sh.position.set(side*.245,.5,0);torso.add(sh);
+    const up=capsule(.068,.056,.27,jacket);sh.add(up);
+    const el=new THREE.Group();el.position.y=-.27;sh.add(el);
+    el.add(capsule(.054,.046,.24,jacket));
+    const cuff=new THREE.Mesh(new THREE.TorusGeometry(.046,.012,6,14),jacketDk);cuff.rotation.x=Math.PI/2;cuff.position.y=-.24;el.add(cuff);
+    const hand=sph(.05,skin,.85,1.15,.7);hand.position.y=-.3;el.add(hand);
+    return{sh,el};
+  };
+  const leg=side=>{
+    const th=new THREE.Group();th.position.set(side*.1,0,0);hips.add(th);
+    th.add(capsule(.088,.07,.44,jeans));
+    const kn=new THREE.Group();kn.position.y=-.44;th.add(kn);
+    kn.add(capsule(.068,.056,.43,jeans));
+    const shoe=new THREE.Group();shoe.position.y=-.47;kn.add(shoe);
+    const up=sph(.068,white,.95,.7,1.55);up.position.set(0,.02,.05);shoe.add(up);
+    const so=sph(.07,sole,.98,.3,1.62);so.position.set(0,-.03,.05);shoe.add(so);
+    const sw=new THREE.Mesh(new THREE.BoxGeometry(.008,.03,.12),accent);sw.position.set(side*.066,.015,.04);shoe.add(sw);
+    return{th,kn};
+  };
+  return{root,hips,torso,head,aL:arm(1),aR:arm(-1),lL:leg(1),lR:leg(-1)};
+}
+
+/* shared quadruped rig: hip pivot carries chest/head/front legs so it can sit; hind legs hang from the root */
+function makeQuad(o){
+  const fur=smat(o.fur,{roughness:.85}),dark=smat(o.dark,{roughness:.85}),light=smat(o.light,{roughness:.85}),
+        black=smat(0x120c08,{roughness:.25,metalness:.2}),pink=smat(0xf08aa8,{roughness:.6});
+  const root=new THREE.Group(),hip=new THREE.Group();hip.position.set(0,o.legH,-o.len*.42);root.add(hip);
+  const L=o.len,R=o.r;
+  const rump=sph(R*.95,fur,1,.95,1.05);rump.position.set(0,R*.15,L*.02);hip.add(rump);
+  const belly=capsule(R*.88,R*.95,L*.62,fur,16);belly.rotation.x=-Math.PI/2;belly.position.set(0,R*.12,L*.05);hip.add(belly);
+  const chest=sph(R*1.02,fur,1,1.05,1);chest.position.set(0,R*.22,L*.7);hip.add(chest);
+  const bib=sph(R*.78,light,.95,1,.8);bib.position.set(0,R*.05,L*.84);hip.add(bib);
+  /* neck and head */
+  const neck=capsule(R*.62,R*.7,L*.32,fur,12);neck.position.set(0,R*.3,L*.78);neck.rotation.x=-Math.PI*.82;hip.add(neck);
+  const head=new THREE.Group();head.position.set(0,R*.3+L*.3,L*.94);hip.add(head);
+  const skull=sph(o.head,fur,o.cat?1.08:1,o.cat?.95:1,1);head.add(skull);
+  const eyeW=smat(o.eyeW,{roughness:.2,emissive:o.eyeGlow||0,emissiveIntensity:o.eyeGlow?.6:0});
+  const ears=[],eyes=[];
+  [-1,1].forEach(s=>{
+    /* eyes (grouped so they can blink / squint happily) */
+    const eg=new THREE.Group();eg.position.set(0,o.head*.18,0);head.add(eg);eyes.push(eg);
+    const ey=sph(o.head*.23,eyeW,1,o.cat?1.15:1,.55);ey.position.set(s*o.head*.42,0,o.head*.84);ey.rotation.y=s*.35;eg.add(ey);
+    const pu=sph(o.head*.14,black,o.cat?.5:1,o.cat?1.3:1,.5);pu.position.set(s*o.head*.45,0,o.head*.95);pu.rotation.y=s*.35;eg.add(pu);
+    const hl=sph(o.head*.06,new THREE.MeshBasicMaterial({color:0xffffff}),1,1,1,8);hl.position.set(s*o.head*.43+o.head*.05,o.head*.07,o.head*1.01);eg.add(hl);
+    /* rosy cheeks */
+    const bl=sph(o.head*.13,new THREE.MeshBasicMaterial({color:0xff8fb3,transparent:true,opacity:.5}),1,.7,.4,10);bl.position.set(s*o.head*.6,-o.head*.18,o.head*.72);bl.rotation.y=s*.6;head.add(bl);
+    /* ears */
+    const ep=new THREE.Group();head.add(ep);ears.push(ep);
+    if(o.cat){
+      ep.position.set(s*o.head*.52,o.head*.72,-o.head*.05);ep.rotation.z=-s*.28;
+      const e=new THREE.Mesh(new THREE.ConeGeometry(o.head*.36,o.head*.72,12),fur);e.scale.z=.45;e.position.y=o.head*.3;ep.add(e);
+      const ei=new THREE.Mesh(new THREE.ConeGeometry(o.head*.24,o.head*.5,12),pink);ei.scale.z=.3;ei.position.set(0,o.head*.26,o.head*.07);ep.add(ei);
+      /* cheeks */
+      const ch=sph(o.head*.48,light,1,.8,.8);ch.position.set(s*o.head*.38,-o.head*.3,o.head*.55);head.add(ch);
+    }else{
+      ep.position.set(s*o.head*.78,o.head*.42,-o.head*.05);ep.rotation.z=s*.35;
+      const e=sph(o.head*.52,dark,.38,1,.62);e.position.y=-o.head*.42;ep.add(e);
+    }
+  });
+  /* muzzle, nose, mouth */
+  if(o.cat){
+    const nose=new THREE.Mesh(new THREE.ConeGeometry(o.head*.11,o.head*.1,3),pink);nose.rotation.x=Math.PI/2+.3;nose.rotation.y=Math.PI;nose.position.set(0,-o.head*.08,o.head*.98);head.add(nose);
+    const wm=new THREE.LineBasicMaterial({color:0xeef2ff,transparent:true,opacity:.75}),wp=[];
+    [-1,1].forEach(s=>[-.08,0,.08].forEach(d=>{wp.push(s*o.head*.35,-o.head*.25,o.head*.85, s*o.head*1.35,-o.head*.18+d*o.head*1.6,o.head*.75)}));
+    const wg=new THREE.BufferGeometry();wg.setAttribute('position',new THREE.Float32BufferAttribute(wp,3));head.add(new THREE.LineSegments(wg,wm));
+    /* little 'w' smile */
+    head.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([new THREE.Vector3(-0.2*o.head,-0.17*o.head,0.93*o.head),new THREE.Vector3(-0.1*o.head,-0.27*o.head,0.97*o.head),new THREE.Vector3(0*o.head,-0.18*o.head,1.0*o.head),new THREE.Vector3(0.1*o.head,-0.27*o.head,0.97*o.head),new THREE.Vector3(0.2*o.head,-0.17*o.head,0.93*o.head)]),16,o.head*0.035,6),smat(0x3a3f6a,{roughness:.5})));
+  }else{
+    const muz=capsule(o.head*.42,o.head*.4,o.head*.5,light,14);muz.rotation.x=-Math.PI/2;muz.position.set(0,-o.head*.28,o.head*.45);muz.scale.set(1,.8,1);head.add(muz);
+    const nose=sph(o.head*.17,black,1.25,.85,1);nose.position.set(0,-o.head*.16,o.head*1.08);head.add(nose);
+    const brow=sph(o.head*.62,dark,1.2,.45,.8);brow.position.set(0,o.head*.62,o.head*.1);head.add(brow);
+    /* big open smile */
+    head.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([new THREE.Vector3(-0.36*o.head,-0.42*o.head,1.08*o.head),new THREE.Vector3(-0.18*o.head,-0.6*o.head,1.24*o.head),new THREE.Vector3(0*o.head,-0.64*o.head,1.3*o.head),new THREE.Vector3(0.18*o.head,-0.6*o.head,1.24*o.head),new THREE.Vector3(0.36*o.head,-0.42*o.head,1.08*o.head)]),16,o.head*0.045,6),smat(0x3a1f14,{roughness:.5})));
+  }
+  const tongue=sph(o.head*.17,pink,1,.35,1.4);tongue.position.set(0,-o.head*.72,o.head*1.22);tongue.rotation.x=.5;tongue.visible=!o.cat;head.add(tongue);
+  /* collar with tag (dog) or bell (cat) */
+  const collar=new THREE.Mesh(new THREE.TorusGeometry(R*.68,R*.1,8,24),smat(o.collar,{roughness:.4,emissive:o.collar,emissiveIntensity:.15}));
+  collar.position.set(0,R*.3+L*.14,L*.86);collar.rotation.x=Math.PI*.32;hip.add(collar);
+  const tag=sph(R*.16,smat(0xffd166,{metalness:.8,roughness:.25}),1,1,.4);tag.position.set(0,R*.3+L*.02,L*.98+R*.55);hip.add(tag);
+  /* legs: capsule + paw */
+  const mkLeg=(x,z,parent,y,thigh)=>{
+    const p=new THREE.Group();p.position.set(x,y,z);parent.add(p);
+    if(thigh){const th=sph(R*.62,fur,.8,1.15,1.1);th.position.y=-o.legH*.12;p.add(th)}
+    p.add(capsule(o.leg,o.leg*.8,o.legH-o.leg*.9,fur,10));
+    const paw=sph(o.leg*1.3,o.cat?fur:light,1,.6,1.35);paw.position.set(0,-o.legH+o.leg*.35,o.leg*.4);p.add(paw);
+    return p;
+  };
+  const fl=mkLeg(R*.55,L*.74,hip,0),fr=mkLeg(-R*.55,L*.74,hip,0);
+  const bl=mkLeg(R*.58,-L*.38,root,o.legH,true),br=mkLeg(-R*.58,-L*.38,root,o.legH,true);
+  /* tail */
+  const tail=new THREE.Group();tail.position.set(0,R*.55,-L*.06);hip.add(tail);
+  if(o.cat){
+    tail.add(taperTube([new THREE.Vector3(0,0,0),new THREE.Vector3(0,.07,-.12),new THREE.Vector3(0,.25,-.2),new THREE.Vector3(0,.42,-.16),new THREE.Vector3(0,.5,-.05)],R*.32,R*.2,fur));
+  }else{
+    tail.add(taperTube([new THREE.Vector3(0,0,0),new THREE.Vector3(0,.08,-.1),new THREE.Vector3(0,.2,-.17),new THREE.Vector3(0,.3,-.16)],R*.3,R*.12,fur));
+  }
+  return{root,hip,head,fl,fr,bl,br,tail,ears,eyes,tongue,o};
+}
+/* scooter: Vespa-style, glossy paint fading cyan (front) -> violet (back) like the 2D one */
+function makeScooter(){
+  const g=new THREE.Group();
+  const paint=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.3,metalness:.12});
+  const dk=smat(0x141a38,{roughness:.55}),tyre=smat(0x0a0d1a,{roughness:.9}),rim=smat(0xb8c4ff,{roughness:.25,metalness:.75}),
+        chrome=smat(0xdfe6ff,{roughness:.18,metalness:.9}),grip=smat(0x1b1f2e,{roughness:.8});
+  const CF=new THREE.Color(0x19d3f0),CB=new THREE.Color(0x7c5cf0);
+  const tint=geo=>{const p=geo.attributes.position,c=new Float32Array(p.count*3),t=new THREE.Color();
+    for(let i=0;i<p.count;i++){t.copy(CB).lerp(CF,clamp01((p.getZ(i)+.95)/1.7));c[i*3]=t.r;c[i*3+1]=t.g;c[i*3+2]=t.b}
+    geo.setAttribute('color',new THREE.BufferAttribute(c,3));return geo};
+  /* side profile (x = forward, y = up) extruded across the width with rounded bevels */
+  const panel=(draw,width,bev)=>{const sh=new THREE.Shape();draw(sh);
+    const geo=new THREE.ExtrudeGeometry(sh,{depth:width-2*bev,bevelEnabled:true,bevelThickness:bev,bevelSize:bev*.85,bevelSegments:5,curveSegments:18});
+    geo.translate(0,0,-(width-2*bev)/2);geo.rotateY(-Math.PI/2);geo.computeVertexNormals();return new THREE.Mesh(tint(geo),paint)};
+  // rear cowl — the round Vespa hip that hides the engine and half the back wheel
+  g.add(panel(s=>{s.moveTo(-.9,.44);s.quadraticCurveTo(-1.02,.64,-.86,.8);s.quadraticCurveTo(-.6,.95,-.22,.86);s.lineTo(-.05,.8);
+    s.quadraticCurveTo(.02,.6,-.06,.47);s.lineTo(-.9,.44)},.46,.1));
+  // floorboard
+  g.add(panel(s=>{s.moveTo(-.12,.3);s.lineTo(.46,.3);s.lineTo(.46,.37);s.lineTo(-.12,.39);s.lineTo(-.12,.3)},.34,.035));
+  // leg shield rising to the headset
+  g.add(panel(s=>{s.moveTo(.36,.3);s.lineTo(.52,.3);s.quadraticCurveTo(.68,.62,.67,1.0);s.lineTo(.58,1.05);s.quadraticCurveTo(.55,.62,.38,.42);s.lineTo(.36,.3)},.46,.06));
+  // front mudguard hugging the wheel
+  const fg=new THREE.Mesh(tint(new THREE.CylinderGeometry(.35,.35,.2,24,1,true,-Math.PI*.15,Math.PI*.95).rotateZ(Math.PI/2).translate(0,.34,.7)),paint);fg.material.side=THREE.DoubleSide;g.add(fg);
+  // wheels: tyre, alloy rim, hub
+  g.userData.wheels=[];
+  [[-.62],[.7]].forEach(([z])=>{const w=new THREE.Group();w.position.set(0,.34,z);g.add(w);g.userData.wheels.push(w);
+    const t=new THREE.Mesh(new THREE.TorusGeometry(.26,.085,12,32),tyre);t.rotation.y=Math.PI/2;w.add(t);
+    const r=new THREE.Mesh(new THREE.CylinderGeometry(.19,.19,.09,24),rim);r.rotation.z=Math.PI/2;w.add(r);
+    for(let k=0;k<5;k++){const sp=new THREE.Mesh(new THREE.BoxGeometry(.1,.025,.3),chrome);sp.rotation.x=k*Math.PI/5;w.add(sp)}
+    const h=new THREE.Mesh(new THREE.CylinderGeometry(.06,.06,.13,14),chrome);h.rotation.z=Math.PI/2;w.add(h)});
+  // fork
+  const fork=new THREE.Mesh(new THREE.CylinderGeometry(.03,.03,.72,10),chrome);fork.position.set(.1,.7,.68);fork.rotation.x=-.12;g.add(fork);
+  // seat with piping
+  const seat=sph(.17,dk,1.15,.42,2.15);seat.position.set(0,.97,-.44);g.add(seat);
+  const pipe=new THREE.Mesh(new THREE.TorusGeometry(.19,.012,6,32),chrome);pipe.rotation.x=Math.PI/2;pipe.scale.set(1.02,2.1,1);pipe.position.set(0,.945,-.44);g.add(pipe);
+  // handlebars, grips, mirrors, headlight
+  const hb=new THREE.Group();hb.position.set(0,1.1,.62);g.add(hb);
+  const head=sph(.11,paint.clone(),1.5,.75,1.1);head.material=new THREE.MeshStandardMaterial({color:CF,roughness:.3,metalness:.12});hb.add(head);
+  const bar=new THREE.Mesh(new THREE.CylinderGeometry(.022,.022,.66,10),chrome);bar.rotation.z=Math.PI/2;bar.position.y=.02;hb.add(bar);
+  [-1,1].forEach(s=>{const gp=new THREE.Mesh(new THREE.CylinderGeometry(.03,.03,.13,10),grip);gp.rotation.z=Math.PI/2;gp.position.set(s*.3,.02,0);hb.add(gp);
+    const st=new THREE.Mesh(new THREE.CylinderGeometry(.008,.008,.2,6),chrome);st.position.set(s*.2,.12,-.02);st.rotation.z=-s*.25;hb.add(st);
+    const mi=new THREE.Mesh(new THREE.CylinderGeometry(.05,.05,.015,16),chrome);mi.rotation.x=Math.PI/2;mi.position.set(s*.23,.22,-.02);hb.add(mi)});
+  const lamp=sph(.075,new THREE.MeshBasicMaterial({color:0xfff2c4}),1,1,.6);lamp.position.set(0,.0,.11);hb.add(lamp);
+  const ring=new THREE.Mesh(new THREE.TorusGeometry(.078,.014,8,24),chrome);ring.position.set(0,0,.12);hb.add(ring);
+  const lt=canvasTex(64,(x,s)=>{const gg=x.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);gg.addColorStop(0,'rgba(255,240,190,.9)');gg.addColorStop(1,'rgba(255,240,190,0)');x.fillStyle=gg;x.fillRect(0,0,s,s)});
+  const glow=new THREE.Sprite(new THREE.SpriteMaterial({map:lt,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));glow.scale.set(.55,.55,1);glow.position.set(0,0,.16);hb.add(glow);
+  // tail light, kickstand
+  const tl=new THREE.Mesh(new THREE.BoxGeometry(.14,.05,.03),new THREE.MeshBasicMaterial({color:0xff3b6b}));tl.position.set(0,.74,-1.0);tl.rotation.x=.5;g.add(tl);
+  const ksp=new THREE.Group();ksp.position.set(-.16,.33,-.15);g.add(ksp);g.userData.ks=ksp;
+  const ks=new THREE.Mesh(new THREE.CylinderGeometry(.015,.015,.34,6),chrome);ks.position.set(0,-.17,0);ksp.rotation.z=-.35;ksp.add(ks);
+  g.traverse(m=>{if(m.isMesh)m.castShadow=true});
+  return g;
+}
+
+let P,D,C,SC,rockTop;
+const SCOOT=[-1.7,-17.5];                                  // parking spot, clear of the camera's orbit
+const RIDE_FROM=[-1.7,-4.2];                               // the ride in starts down the slope
+const STAND=[-1.0,-17.62];                                 // where he steps off
+const START={p:STAND,d:[-.75,-20.6],c:[.55,-21.5]};
+const STOP ={p:[0,-31.0],d:[-1.15,-31.25],c:[1.08,-31.3]};
+const SIT  ={p:[0,-31.72]};
+
+function build(){
+  const cv=document.getElementById('e3canvas');
+  renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.75));
+  renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  scene=new THREE.Scene();
+  const HORIZON=new THREE.Color(.105,.13,.30);
+  scene.fog=new THREE.Fog(HORIZON,26,520);
+  camera=new THREE.PerspectiveCamera(45,1,.1,2000);
+
+  const md=new THREE.Vector3(moonDir.x,moonDir.y,moonDir.z).normalize();
+  /* sky dome — gradient plus a soft halo around the moon */
+  sky=new THREE.Mesh(new THREE.SphereGeometry(900,32,16),new THREE.ShaderMaterial({side:THREE.BackSide,depthWrite:false,fog:false,
+    uniforms:{md:{value:md}},
+    vertexShader:'varying vec3 vD;void main(){vD=normalize(position);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+    fragmentShader:'uniform vec3 md;varying vec3 vD;void main(){float y=clamp(vD.y,0.,1.);vec3 c=mix(vec3(.105,.13,.30),vec3(.012,.016,.06),pow(y,.45));'+
+      'float m=max(dot(normalize(vD),md),0.);c+=vec3(.22,.27,.42)*pow(m,22.)+vec3(.07,.09,.17)*pow(m,5.);gl_FragColor=vec4(c,1.);}'}));
+  sky.renderOrder=-2;scene.add(sky);
+
+  /* twinkling stars */
+  const N=2600,pos=new Float32Array(N*3),ph=new Float32Array(N),sz=new Float32Array(N),pr=renderer.getPixelRatio();
+  for(let i=0;i<N;i++){const u=Math.random(),v=Math.random()*.97+.03,th=u*Math.PI*2,y=Math.pow(v,.8),r=Math.sqrt(1-y*y);
+    pos[i*3]=Math.cos(th)*r*850;pos[i*3+1]=y*850-40;pos[i*3+2]=Math.sin(th)*r*850;ph[i]=Math.random()*6.28;sz[i]=(Math.random()<.06?2.6:1+Math.random()*1.2)*pr}
+  const sg=new THREE.BufferGeometry();sg.setAttribute('position',new THREE.BufferAttribute(pos,3));sg.setAttribute('ph',new THREE.BufferAttribute(ph,1));sg.setAttribute('sz',new THREE.BufferAttribute(sz,1));
+  stars=new THREE.Points(sg,new THREE.ShaderMaterial({transparent:true,depthWrite:false,fog:false,uniforms:{uT:{value:0}},
+    vertexShader:'attribute float ph;attribute float sz;uniform float uT;varying float vA;void main(){vA=.55+.45*sin(uT*1.6+ph*3.);gl_PointSize=sz;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+    fragmentShader:'varying float vA;void main(){float d=length(gl_PointCoord-.5);if(d>.5)discard;gl_FragColor=vec4(vec3(.92,.95,1.),vA*(1.-d*2.));}'}));
+  stars.renderOrder=-1;scene.add(stars);
+
+  /* the moon (infinitely far: it rides with the camera, so it never parallaxes) */
+  const mt=canvasTex(512,(x,s)=>{const g=x.createRadialGradient(s*.42,s*.4,s*.05,s/2,s/2,s/2);g.addColorStop(0,'#fbfcff');g.addColorStop(1,'#cfd6ee');
+    x.fillStyle=g;x.beginPath();x.arc(s/2,s/2,s/2,0,7);x.fill();
+    [[.36,.38,.11],[.62,.3,.06],[.55,.62,.09],[.3,.64,.05],[.7,.55,.04],[.46,.2,.035]].forEach(([a,b,r])=>{x.fillStyle='rgba(150,160,205,.38)';x.beginPath();x.arc(a*s,b*s,r*s,0,7);x.fill()});});
+  moon=new THREE.Mesh(new THREE.CircleGeometry(40,48),new THREE.MeshBasicMaterial({map:mt,fog:false,transparent:true}));scene.add(moon);
+  const gt=canvasTex(256,(x,s)=>{const g=x.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);g.addColorStop(0,'rgba(210,222,255,.55)');g.addColorStop(.25,'rgba(170,190,255,.18)');g.addColorStop(1,'rgba(150,170,255,0)');x.fillStyle=g;x.fillRect(0,0,s,s)});
+  moonGlow=new THREE.Sprite(new THREE.SpriteMaterial({map:gt,fog:false,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));moonGlow.scale.set(300,300,1);scene.add(moonGlow);
+
+  /* a shooting star sprite: head anchored at the sprite's right end */
+  const st=canvasTex(256,(x,s)=>{const g=x.createLinearGradient(0,0,s,0);g.addColorStop(0,'rgba(150,185,255,0)');g.addColorStop(.6,'rgba(190,215,255,.45)');g.addColorStop(.93,'rgba(235,242,255,.95)');g.addColorStop(1,'rgba(255,255,255,1)');
+    x.fillStyle=g;for(let y=0;y<s;y++){const a=1-Math.abs(y-s/2)/(s*.14);if(a>0){x.globalAlpha=a*a;x.fillRect(0,y,s,1)}}   // soft-edged tail
+    x.globalAlpha=1;const h=x.createRadialGradient(s*.965,s/2,0,s*.965,s/2,s*.07);h.addColorStop(0,'rgba(255,255,255,1)');h.addColorStop(1,'rgba(200,220,255,0)');
+    x.fillStyle=h;x.fillRect(s*.85,s*.4,s*.15,s*.2)});                                                                 // bright head
+  meteor=new THREE.Sprite(new THREE.SpriteMaterial({map:st,fog:false,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:0}));
+  meteor.center.set(1,.5);scene.add(meteor);
+
+  /* light: cool moonlight from ahead (rims the crew), dim sky fill, faint fill from behind the camera */
+  sun=new THREE.DirectionalLight(0xc4d2ff,1.15);scene.add(sun);scene.add(sun.target);
+  sun.castShadow=true;const sm=innerWidth<700?1024:2048;sun.shadow.mapSize.set(sm,sm);
+  Object.assign(sun.shadow.camera,{left:-5,right:5,top:5,bottom:-5,near:1,far:140});sun.shadow.bias=-.0006;sun.shadow.normalBias=.03;
+  scene.add(new THREE.HemisphereLight(0x4a5aa0,0x0a0c18,.78));
+  const fill=new THREE.DirectionalLight(0x8090c0,.32);fill.position.set(.3,.6,1);scene.add(fill);
+
+  /* terrain */
+  const W=900,Dz=620,geo=new THREE.PlaneGeometry(W,Dz,W/4,Dz/2);geo.rotateX(-Math.PI/2);geo.translate(0,0,60-Dz/2);
+  const p=geo.attributes.position;for(let i=0;i<p.count;i++)p.setY(i,H(p.getX(i),p.getZ(i)));
+  geo.computeVertexNormals();
+  const col=new Float32Array(p.count*3),n=geo.attributes.normal,cA=new THREE.Color(0x1a2146),cG=new THREE.Color(0x152a30),cS=new THREE.Color(0x9aa8d4),tmp=new THREE.Color();
+  for(let i=0;i<p.count;i++){const y=p.getY(i),sl=1-n.getY(i);
+    tmp.copy(cG).lerp(cA,clamp01(sl*2.4+(y-6)/40));if(y>70)tmp.lerp(cS,clamp01((y-70)/50)*clamp01(1.2-sl*1.6));
+    const j=.92+hash(i,7)*.16;col[i*3]=tmp.r*j;col[i*3+1]=tmp.g*j;col[i*3+2]=tmp.b*j}
+  geo.setAttribute('color',new THREE.BufferAttribute(col,3));
+  const terr=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({vertexColors:true,flatShading:true,roughness:1,metalness:0}));terr.receiveShadow=true;scene.add(terr);
+
+  /* rocks: the cat's perch plus a few scattered boulders */
+  const rockM=mat(0x2a3160);
+  const pg=new THREE.CylinderGeometry(.33,.47,.64,7,2);            // flat-topped boulder: the cat lands on a real surface
+  { const pp=pg.attributes.position;for(let i=0;i<pp.count;i++){const y=pp.getY(i);if(y<.31){const j=1+(hash(i,21)-.5)*.22;pp.setX(i,pp.getX(i)*j);pp.setZ(i,pp.getZ(i)*j)}}pg.computeVertexNormals() }
+  const perch=new THREE.Mesh(pg,rockM);
+  perch.position.set(STOP.c[0],groundY(STOP.c[0],STOP.c[1])+.12,STOP.c[1]);perch.rotation.y=.4;perch.castShadow=perch.receiveShadow=true;scene.add(perch);
+  rockTop=perch.position.y+.32;
+  [[2.7,-26],[-2.9,-23.5],[-3.6,-29],[3.4,-30.2],[4.8,-21.5],[-4.2,-12.5]].forEach(([x,z],i)=>{const r=new THREE.Mesh(new THREE.DodecahedronGeometry(.3+hash(i,3)*.5,0),rockM);
+    r.position.set(x,groundY(x,z)-.05,z);r.rotation.set(hash(i,1)*3,hash(i,2)*3,0);scene.add(r)});
+  /* little grass tufts along the path */
+  const gm=mat(0x1f3d3a);
+  for(let i=0;i<70;i++){const x=(hash(i,11)-.5)*9,z=-12-hash(i,12)*20;if(Math.abs(x)<.9)continue;
+    const t=new THREE.Mesh(new THREE.ConeGeometry(.06,.3+hash(i,13)*.25,4),gm);t.position.set(x,groundY(x,z)+.12,z);t.rotation.z=(hash(i,14)-.5)*.5;scene.add(t)}
+
+  SC=makeScooter();SC.rotation.order='YXZ';scene.add(SC);
+  P=makePerson();
+  D=makeQuad({fur:0xd9995c,dark:0xa06a3a,light:0xf3cf9f,eyeW:0x2a1a10,collar:0x19d3f0,r:.15,len:.6,head:.14,leg:.042,legH:.3});
+  C=makeQuad({fur:0xaab4d8,dark:0x7f8bbd,light:0xdfe5fa,eyeW:0xd4f27c,eyeGlow:0x7aa52a,collar:0xff4d9d,r:.105,len:.46,head:.11,leg:.03,legH:.24,cat:true});
+  /* soft contact shadow under each of them */
+  const bt=canvasTex(128,(x,s)=>{const g=x.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);g.addColorStop(0,'rgba(0,0,8,.55)');g.addColorStop(1,'rgba(0,0,8,0)');x.fillStyle=g;x.fillRect(0,0,s,s)});
+  [[P,.8],[D,.75],[C,.55]].forEach(([k,sz])=>{
+    k.root.rotation.order='YXZ';k.root.rotation.y=Math.PI;k.yaw=Math.PI;scene.add(k.root);
+    k.root.traverse(m=>{if(m.isMesh)m.castShadow=true});
+    const b=new THREE.Mesh(new THREE.PlaneGeometry(sz,sz*1.3),new THREE.MeshBasicMaterial({map:bt,transparent:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2}));
+    b.rotation.x=-Math.PI/2;scene.add(b);k.blob=b;
+  });
+  E3.built=true;
+}
+/* ---------- timeline -----------------------------------------------------------
+   0 → rideEnd      ride in from down the slope, dog & cat running alongside
+   dis0 → dis1      park, kickstand down, he steps off
+   walk0 → sitStart walk up to the cliff edge (camera orbits behind into 3rd person)
+   sitStart → end   sit and look at the moon; panel appears
+   Played backwards (◀) the crew stands, walks back, he gets on, U-turns and rides off.
+   ------------------------------------------------------------------------------ */
+function walkU(t,t0,t1){const u=clamp01((t-t0)/(t1-t0)),r=.09;            // trapezoid speed: ease in, cruise, ease out
+  const v=1/(1-r);if(u<r)return v*u*u/(2*r);if(u>1-r){const w=1-u;return 1-v*w*w/(2*r)}return v*(u-r/2)}
+function speedF(t,t0,t1){const u=(t-t0)/(t1-t0);return ss(0,.09,u)*(1-ss(.91,1,u))}
+const angTo=(a,b)=>{let d=(b-a)%(Math.PI*2);if(d>Math.PI)d-=Math.PI*2;if(d<-Math.PI)d+=Math.PI*2;return d};
+function turn(k,target,dt,rate){k.yaw+=angTo(k.yaw,target)*Math.min(1,dt*(rate||5));k.root.rotation.y=k.yaw}
+
+/* exit route for the ride away: a U-turn toward the camera side, then straight back down the slope */
+const UT_R=1.6,UT_ARC=Math.PI*UT_R,UT_STRAIGHT=13;
+function exitPath(d){
+  const cx=SCOOT[0]+UT_R,cz=SCOOT[1];
+  if(d<UT_ARC){const th=Math.PI+d/UT_R;return{x:cx+UT_R*Math.cos(th),z:cz+UT_R*Math.sin(th),hx:-Math.sin(th),hz:Math.cos(th)}}
+  return{x:cx+UT_R,z:cz+(d-UT_ARC),hx:0,hz:1};
+}
+function scooterAt(t,dt){
+  let x,z,hx=0,hz=-1,dist,moving;
+  if(E3.mode==='exit'&&t<T.rideEnd){                       // riding away (reverse playback)
+    const u=1-t/T.rideEnd,ue=u*u*.55+u*.45;dist=ue*(UT_ARC+UT_STRAIGHT);
+    const e=exitPath(dist);x=e.x;z=e.z;hx=e.hx;hz=e.hz;moving=u>0&&u<1;
+  }else{                                                   // riding in, then parked
+    const u=clamp01(t/T.rideEnd),ue=1-(1-u)*(1-u);
+    x=lerp(RIDE_FROM[0],SCOOT[0],ue);z=lerp(RIDE_FROM[1],SCOOT[1],ue);dist=ue*Math.abs(SCOOT[1]-RIDE_FROM[1]);moving=u<1;
+  }
+  const y=groundY(x,z),gF=groundY(x+hx*.7,z+hz*.7),gB=groundY(x-hx*.62,z-hz*.62);
+  SC.position.set(x,y,z);
+  const parked=ss(T.rideEnd-.15,T.rideEnd+.25,t)*(E3.mode==='exit'&&t<T.rideEnd?0:1);
+  const pt=-Math.atan2(gF-gB,1.32),ud=SC.userData;
+  ud.pitch=(ud.pitch===undefined||E3.snap)?pt:ud.pitch+(pt-ud.pitch)*(1-Math.exp(-dt*30));
+  SC.rotation.set(ud.pitch,Math.atan2(hx,hz),-.07*parked);
+  SC.updateMatrixWorld(true);
+  { let dy=-1e9;const wp=V();SC.userData.wheels.forEach(w=>{w.getWorldPosition(wp);dy=Math.max(dy,groundY(wp.x,wp.z)+.345-wp.y)});
+    SC.position.y+=dy;SC.updateMatrixWorld(true); }          // tyres touch the ground exactly; rider uses THIS frame's scooter
+  SC.userData.wheels.forEach(w=>w.rotation.x=dist/.345);
+  SC.userData.ks.rotation.x=lerp(-1.35,0,parked);          // kickstand flips down once parked
+  return{x,z,hx,hz,moving};
+}
+
+function pose(t,clk,dt){
+  const sc=scooterAt(t,dt),back=E3.dir<0;
+  /* ----- person ----- */
+  const pu=walkU(t,T.walk0,T.sitStart),pf=speedF(t,T.walk0,T.sitStart),s=ss(T.sitStart,T.sitEnd,t);
+  const ride=1-ss(T.dis0,T.dis1,t),k=ss(T.dis0,T.dis1,t);
+  const dist=Math.hypot(STOP.p[0]-START.p[0],STOP.p[1]-START.p[1])*pu,ph=dist/.78*Math.PI,sw=Math.sin(ph)*pf;
+  // pose = walk, blended toward sitting, blended toward riding
+  const W={hips:.96+Math.abs(Math.cos(ph))*.035*pf,thL:-sw*.5,thR:sw*.5,knL:(.12+Math.max(0,Math.sin(ph+1.3))*.75)*pf,knR:(.12+Math.max(0,Math.sin(ph+1.3+Math.PI))*.75)*pf,
+           shL:sw*.45,shR:-sw*.45,szL:.06,szR:-.06,el:-.25,tor:.05*pf};
+  const S={hips:.12,thL:-1.45,thR:-1.45,knL:1,knR:1,shL:.55,shR:.55,szL:.28,szR:-.28,el:-.05,tor:-.16};
+  const R={hips:1.05,thL:-1.4,thR:-1.4,knL:1.55,knR:1.55,shL:-.85,shR:-.85,szL:-.1,szR:.1,el:-.15,tor:.62};
+  const m={};for(const key in W)m[key]=lerp(lerp(W[key],S[key],s),R[key],ride);
+  m.knL+=Math.sin(Math.PI*s)*.9;m.knR+=Math.sin(Math.PI*s)*.9;   // squat on the way down / up
+  P.hips.position.y=m.hips;
+  P.lL.th.rotation.x=m.thL;P.lR.th.rotation.x=m.thR;P.lL.kn.rotation.x=m.knL;P.lR.kn.rotation.x=m.knR;
+  P.lR.th.rotation.z=-Math.sin(Math.PI*k)*.85;               // swings his leg over the seat
+  P.aL.sh.rotation.x=m.shL;P.aR.sh.rotation.x=m.shR;P.aL.sh.rotation.z=m.szL;P.aR.sh.rotation.z=m.szR;
+  P.aL.el.rotation.x=P.aR.el.rotation.x=m.el;
+  P.torso.rotation.x=m.tor+Math.sin(clk*1.4)*.012*s;
+  P.head.rotation.x=lerp(0,-.36,ss(T.sitEnd-.4,T.sitEnd+1.2,t))+ride*-.12;
+  P.head.rotation.y=Math.sin(clk*.3)*.07*s;
+  if(ride>0){                                                // on (or stepping off) the scooter
+    const seat=SC.localToWorld(V().set(0,0,-.04)),standY=groundY(STAND[0],STAND[1]);
+    P.root.position.set(lerp(seat.x,STAND[0],k),lerp(seat.y,standY,k)+Math.sin(Math.PI*k)*.16,lerp(seat.z,STAND[1],k));
+    P.root.rotation.x=SC.rotation.x*(1-k);
+    if(k===0){P.yaw=SC.rotation.y;P.root.rotation.y=P.yaw}else turn(P,Math.PI,dt,6);
+  }else{
+    let px=lerp(START.p[0],STOP.p[0],pu),pz=lerp(START.p[1],STOP.p[1],pu);
+    pz=lerp(pz,SIT.p[1],ss(T.sitStart,T.sitStart+.9,t));
+    turn(P,back&&pf>.15?0:Math.PI,dt,4.5);                   // walking back down he faces the scooter
+    const fx=Math.sin(P.yaw),fz=Math.cos(P.yaw),g0=groundY(px,pz);
+    const leg=(th,kn)=>{const kz=-.44*Math.sin(th),ky=.44*Math.cos(th),z2=kz-.522*Math.sin(th+kn),y2=ky+.522*Math.cos(th+kn);
+      return{gk:groundY(px+fx*kz,pz+fz*kz),ky,gf:groundY(px+fx*z2,pz+fz*z2),fy:y2}};
+    const a=leg(m.thL,m.knL),b=leg(m.thR,m.knR),base=lerp((a.gf+b.gf)/2,g0,s);
+    let hy=m.hips;[a,b].forEach(l=>{hy=Math.max(hy,l.gf-base+l.fy+.028,l.gk-base+l.ky+.075)});   // keep feet and knees above the surface
+    P.hips.position.y=hy;
+    P.root.position.set(px,base,pz);P.root.rotation.x=0;
+  }
+  if(ride>0)gripBars(ride);
+
+  /* ----- dog & cat ----- */
+  quadAt(D,t,clk,dt,sc,{side:1.0,ahead:.5,back:1.3,maxV:3.5,from:[RIDE_FROM[0]+1.05,RIDE_FROM[1]-1.3],stride:.42,
+    w0:T.walk0+.2,w1:T.sitStart-.5,s0:T.sitStart-.5,s1:T.sitStart+.5});
+  { const sit=ss(T.sitStart,T.sitEnd,t),look=ss(.55,.85,Math.sin(clk*.42-1)*.5+.5);   // now and then the dog looks back at you, grinning
+    D.head.rotation.y=-lerp(.25,1.15,look)*sit*ss(T.sitEnd,T.sitEnd+.8,t)+Math.sin(clk*.5)*.05*sit; }
+  quadAt(C,t,clk,dt,sc,{side:1.75,ahead:-.4,back:2.4,maxV:3.2,from:[RIDE_FROM[0]+1.8,RIDE_FROM[1]-2.4],stride:.3,cat:true,
+    w0:T.walk0+.05,w1:T.sitStart-.3,h0:T.sitStart-.25,s0:T.sitStart+.4,s1:T.sitStart+1.1});
+}
+/* two-bone IK: both hands find the handlebar grips while he is on the scooter */
+const _q=()=>new THREE.Quaternion(),DOWN=()=>new THREE.Vector3(0,-1,0);
+function gripBars(w){
+  SC.updateMatrixWorld(true);P.root.updateMatrixWorld(true);
+  const A=.27,B=.3;                                          // upper arm, forearm (to the hand centre)
+  [[P.aL,1],[P.aR,-1]].forEach(([arm,side])=>{
+    const tgt=P.torso.worldToLocal(SC.localToWorld(V().set(side*.3,1.12,.62)));
+    const sh=arm.sh.position,d=tgt.clone().sub(sh);
+    const L=Math.min(d.length(),(A+B)*.995),dn=d.clone().normalize();
+    const alpha=Math.acos(clamp01((A*A+L*L-B*B)/(2*A*L)));   // angle between shoulder→hand and the upper arm
+    const pole=V().set(side,-.7,-.25);pole.sub(dn.clone().multiplyScalar(pole.dot(dn))).normalize(); // elbows out and down
+    const elb=sh.clone().addScaledVector(dn,A*Math.cos(alpha)).addScaledVector(pole,A*Math.sin(alpha));
+    const u=elb.clone().sub(sh).normalize();
+    const qs=_q().setFromUnitVectors(DOWN(),u);
+    const hand=sh.clone().addScaledVector(dn,L),f=hand.sub(elb).normalize().applyQuaternion(qs.clone().invert());
+    const qe=_q().setFromUnitVectors(DOWN(),f);
+    arm.sh.quaternion.slerp(qs,w);arm.el.quaternion.slerp(qe,w);
+  });
+}
+function quadAt(Q,t,clk,dt,sc,o){
+  const id=Q===D?'d':'c',ST=START[id],EN=STOP[id],back=E3.dir<0;
+  const s=ss(o.s0,o.s1,t);
+  let x,z,f,ph,yawT=Math.PI,lift=0;
+  const app=T.rideEnd+.35;
+  if(E3.snap)Q.chase=null;
+  if(E3.mode==='exit'&&t<T.rideEnd){                          // chasing the scooter as he rides away: they react late and lag behind
+    const c=Q.chase||(Q.chase={x:ST[0],z:ST[1],dist:0,v:0,wait:o.cat?.55:.3});
+    const tx=sc.x-sc.hx*o.back+sc.hz*o.side*.6,tz=sc.z-sc.hz*o.back-sc.hx*o.side*.6;
+    const dx=tx-c.x,dz=tz-c.z,dd=Math.hypot(dx,dz);
+    c.wait-=dt;
+    const want=c.wait>0?0:Math.min(o.maxV,dd*1.6);
+    c.v+=(want-c.v)*Math.min(1,dt*2.6);                       // they speed up like animals, not instantly
+    if(dd>1e-3){c.x+=dx/dd*c.v*dt;c.z+=dz/dd*c.v*dt}
+    yawT=c.v>.35?Math.atan2(dx,dz):Q.yaw;                     // they face where THEY run, not where the scooter points
+    c.dist+=c.v*dt;x=c.x;z=c.z;f=clamp01(c.v/1.4);ph=c.dist/(o.stride*1.5)*Math.PI;
+  }else if((Q.chase=null)||t<app){                           // running in alongside the scooter
+    const u=clamp01(t/app),ue=1-(1-u)*(1-u);
+    x=lerp(o.from[0],ST[0],ue);z=lerp(o.from[1],ST[1],ue);
+    f=1-ss(.75,1,u);ph=ue*Math.hypot(ST[0]-o.from[0],ST[1]-o.from[1])/(o.stride*1.5)*Math.PI;
+  }else{                                                      // walk up, then sit
+    const u=walkU(t,o.w0,o.w1);f=speedF(t,o.w0,o.w1);
+    const E=o.cat?[EN[0],EN[1]+.85]:EN;                        // the cat stops in front of its rock, not inside it
+    x=lerp(ST[0],E[0],u);z=lerp(ST[1],E[1],u);
+    ph=Math.hypot(E[0]-ST[0],E[1]-ST[1])*u/o.stride*Math.PI;
+    if(back&&f>.15)yawT=0;
+    if(o.cat){const hop=ss(o.h0,o.h0+.6,t),arc=Math.sin(Math.PI*hop);
+      x=lerp(x,EN[0],hop);z=lerp(z,EN[1],hop);                // leap forward onto the top…
+      lift=(rockTop-groundY(x,z))*ss(0,.5,hop)+arc*.46;          // …front paws up first, clearing the rim, landing on the flat top
+      f=Math.max(f,arc*.6)}
+  }
+  turn(Q,yawT,dt,E3.mode==='exit'&&t<T.rideEnd?3.5:6);
+  quadPose(Q,x,z,ph,f,s,clk,lift);
+}
+function quadPose(Q,x,z,ph,f,s,clk,lift){
+  const o=Q.o;
+  { const hx=Math.sin(Q.yaw)*o.len*.5,hz=Math.cos(Q.yaw)*o.len*.5,gF=groundY(x+hx,z+hz),gB=groundY(x-hx,z-hz),gl=lift>.05?0:1;
+    Q.root.position.set(x,Math.max(groundY(x,z),(gF+gB)/2*gl+groundY(x,z)*(1-gl))+.015+(lift||0)+Math.abs(Math.sin(ph))*.02*f,z);
+    Q.root.rotation.x=gl*-Math.atan2(gF-gB,o.len); }            // body follows the slope, paws on the ground front and back
+  /* happy: blinks, a contented slow-blink for the cat, panting dog */
+  const blink=Math.max(0,Math.sin(clk*1.7+(o.cat?2:0))-.965)/.035;
+  const slow=o.cat?s*(.3+.7*ss(.55,.95,Math.sin(clk*.7)*.5+.5)):0;
+  Q.eyes.forEach(e=>e.scale.y=1-.85*Math.max(blink,slow));
+  Q.hip.rotation.x=lerp(0,-.75,s);                       // front up = sitting
+  Q.fl.rotation.x=lerp(Math.sin(ph)*.55*f,.75,s);Q.fr.rotation.x=lerp(-Math.sin(ph)*.55*f,.75,s);
+  Q.bl.rotation.x=lerp(-Math.sin(ph)*.55*f,-1.25,s);Q.br.rotation.x=lerp(Math.sin(ph)*.55*f,-1.25,s);
+  Q.bl.position.y=Q.br.position.y=lerp(o.legH,o.legH*.64,s);
+  Q.head.rotation.x=lerp(0,-.15,s)+(o.cat?0:Math.sin(clk*2.2)*.03);
+  Q.tail.rotation.x=lerp(0,o.cat?2.25:1.3,s);                       // tail drapes down to the ground when sitting
+  if(o.cat){Q.tail.rotation.z=Math.sin(clk*(f>.2?3:1.1))*.35*(1-s*.6);
+    const tw=Math.max(0,Math.sin(clk*.9)-.93)*9;Q.ears[0].rotation.x=-tw*.5;}       // occasional ear twitch
+  if(o.cat)Q.head.rotation.y=s*.45*ss(.25,.75,Math.sin(clk*.35)*.5+.5);           // turns to him now and then
+  else{Q.tail.rotation.y=Math.sin(clk*(f>.2?16:11))*.75;
+    Q.head.rotation.z=Math.sin(clk*1.1)*.14*s;                                       // happy head tilt
+    Q.tongue.scale.y=.35*(1+.3*Math.sin(clk*10));
+    Q.ears.forEach((e,i)=>{e.rotation.x=Math.sin(ph+i)*.3*f;e.rotation.z=(i?1:-1)*(.35+Math.abs(Math.sin(ph))*.15*f)});
+  }
+}
+
+/* ---------- camera: side view (matches the 2D road) -> orbit to third person -> wide moon shot ---------- */
+const V=()=>new THREE.Vector3();
+let cp,ct,tmpA,tmpB;
+const camS={p:null,t:null};
+function cameraAt(t,clk,dt){
+  const portrait=camera.aspect<1;
+  const pr=P.root.position,o=ss(T.orbit0,T.orbitEnd,t);
+  const a=lerp(Math.PI/2,.17,o)+Math.sin(clk*.25)*.03*o;
+  const r=lerp(6.6,6.8,o)+(portrait?2.4:0),h=lerp(1.45,2.45,o);
+  cp.set(pr.x+Math.sin(a)*r,pr.y+h,pr.z+Math.cos(a)*r);
+  ct.set(pr.x,pr.y+lerp(.95,1.5,o),pr.z+lerp(0,-6,o));
+  const e=ss(T.camStart,T.camEnd,t);
+  if(e>0){                                                // settle low behind the crew, moon above them
+    const ex=SIT.p[0],ez=SIT.p[1],ey=groundY(ex,ez);
+    tmpA.set(ex+1.15+Math.sin(clk*.11)*.2,ey+.95+Math.sin(clk*.17)*.05,ez+6.6+(portrait?4.2:0));
+    tmpB.set(ex+.3,ey+(portrait?1.6:1.05),ez-12);
+    cp.lerp(tmpA,e);ct.lerp(tmpB,e);
+  }
+  const gy=groundY(cp.x,cp.z)+.6;if(cp.y<gy)cp.y=gy;       // keep the camera above the ground
+  if(!camS.p||E3.snap){camS.p=cp.clone();camS.t=ct.clone()}              // smooth follow; snap after skips
+  else{const k=1-Math.exp(-dt*7);camS.p.lerp(cp,k);camS.t.lerp(ct,k)}
+  camera.position.copy(camS.p);camera.lookAt(camS.t);
+}
+
+/* ---------- loop ---------- */
+let meteorT=-1,meteorV,meteorP,nextMeteor=16;
+function frame(now){
+  E3.raf=requestAnimationFrame(frame);
+  const dt=Math.min(.1,(now-E3.last)/1000||0);E3.last=now;
+  if(!document.hidden){E3.t+=dt*E3.dir*(E3.dir<0&&E3.mode==='exit'&&E3.t<T.rideEnd?.55:1);E3.clock+=dt}
+  if(E3.t>T.end)E3.t=T.end;
+  if(E3.t<0)E3.t=0;
+  if(E3.dir<0&&E3.t<.55&&!E3.leaving){E3.leaving=true;closeEnding()}   // ridden off: back to the 2D road
+  const t=E3.t,clk=E3.clock;
+  E3.snap=E3.prevT===undefined||Math.abs(t-E3.prevT)>.6;E3.prevT=t;
+  pose(t,clk,dt);cameraAt(t,clk,dt);
+  [P,D,C].forEach(k=>{const r=k.root.position,g=groundY(r.x,r.z);k.blob.position.set(r.x,g+.03,r.z);k.blob.material.opacity=Math.max(0,1-(r.y-g)*2.5)});
+  const md=tmpA.set(moonDir.x,moonDir.y,moonDir.z).normalize();
+  sky.position.copy(camera.position);stars.position.copy(camera.position);
+  stars.material.uniforms.uT.value=clk;
+  moon.position.copy(camera.position).addScaledVector(md,560);moon.lookAt(camera.position);
+  moonGlow.position.copy(moon.position).addScaledVector(md,2);
+  sun.position.copy(P.root.position).addScaledVector(md,60);sun.target.position.copy(P.root.position);
+  /* an occasional meteor across the sky */
+  const moonView=E3.dir>0&&t>=T.camEnd-1.5;                // the final shot: shooting stars near the moon
+  if(moonView&&!E3.moonView)nextMeteor=Math.min(nextMeteor,clk+1+Math.random()*1.2);
+  E3.moonView=moonView;
+  if(clk>nextMeteor&&meteorT<0){meteorT=0;
+    // every meteor gets its own heading: anywhere from almost flat to almost straight down, from either side
+    const th=-(12+Math.random()*156)*Math.PI/180,spd=230+Math.random()*110;
+    meteorV=V().set(Math.cos(th)*spd,Math.sin(th)*spd,0);
+    let pass;
+    if(moonView){                                           // its path crosses the sky close to the moon, on a random side
+      nextMeteor=clk+2.2+Math.random()*3;
+      const a=Math.random()*Math.PI*2,r=58+Math.random()*95;
+      pass=V().set(6.6+Math.cos(a)*r,117+Math.sin(a)*r*.75,-540);
+    }else{
+      nextMeteor=clk+8+Math.random()*7;
+      pass=V().set((Math.random()-.5)*520,150+Math.random()*120,-480);
+    }
+    meteorP=camera.position.clone().add(pass).addScaledVector(meteorV,-(.3+Math.random()*.25));   // mid-flight as it passes that point
+    }
+  if(meteorT>=0){meteorT+=dt;const L=.9,k=meteorT/L;
+    if(k>=1){meteorT=-1;meteor.material.opacity=0}
+    else{const head=meteorP.clone().addScaledVector(meteorV,meteorT);meteor.position.copy(head);
+      const a=head.clone().project(camera),b=head.clone().add(meteorV).project(camera);
+      meteor.material.rotation=Math.atan2(b.y-a.y,(b.x-a.x)*camera.aspect);
+      meteor.scale.set(lerp(14,95,Math.min(1,k*1.6))*(1-Math.max(0,k-.6)*1.6),10,1);
+      meteor.material.opacity=Math.min(1,k*6)*(1-ss(.6,1,k))}}
+  ui(t);
+  renderer.render(scene,camera);
+}
+function resize(){if(!renderer)return;const w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=w/h<1?60:45;camera.updateProjectionMatrix()}
+addEventListener('resize',resize);
+
+/* ---------- overlay UI ---------- */
+const $=id=>document.getElementById(id);
+function ui(t){
+  const el=$('ending'),fwd=E3.dir>0;
+  el.classList.toggle('cap1',fwd&&t>5.3&&t<9.6);
+  el.classList.toggle('cap2',fwd&&t>10.1&&t<13.8);
+  el.classList.toggle('final',fwd&&t>=T.panel);
+  el.classList.toggle('rev',!fwd);
+  $('e3next').disabled=fwd&&t>=T.end;
+}
+
+function loadThree(){
+  if(window.THREE)return Promise.resolve();
+  if(E3.loading)return E3.loading;
+  E3.loading=new Promise((res,rej)=>{const s=document.createElement('script');s.src=THREE_URL;s.async=true;
+    s.onload=res;s.onerror=()=>{E3.loading=null;s.remove();rej(new Error('three.js failed to load'))};document.head.appendChild(s)});
+  return E3.loading;
+}
+const calm=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
+function restart(){E3.prevT=undefined;E3.t=calm()?T.end:0;E3.dir=1;E3.mode='enter';E3.leaving=false;E3.clock=0;nextMeteor=16;meteorT=-1;
+  [P,D,C].forEach(k=>{k.yaw=Math.PI;k.root.rotation.y=Math.PI;k.chase=null})}
+window.preloadEnding=()=>{loadThree().catch(()=>{})};
+window.playEnding=async function(){
+  if(E3.open)return;
+  E3.open=true;clearTimeout(E3.closing);
+  document.body.classList.add('ending');                    // 2D road zooms toward the rider and dims
+  try{await loadThree()}catch(e){E3.open=false;document.body.classList.remove('ending');return}
+  if(!E3.built){cp=V();ct=V();tmpA=V();tmpB=V();build()}
+  resize();restart();
+  const el=$('ending');el.classList.remove('final','cap1','cap2','rev');el.style.display='block';
+  cancelAnimationFrame(E3.raf);E3.last=performance.now();E3.raf=requestAnimationFrame(frame);
+  setTimeout(()=>el.classList.add('show'),calm()?0:500);
+};
+window.closeEnding=function(){
+  if(!E3.open||E3.closingNow)return;E3.closingNow=true;
+  const el=$('ending');el.classList.remove('show');
+  document.body.classList.remove('ending');
+  E3.closing=setTimeout(()=>{el.style.display='none';cancelAnimationFrame(E3.raf);E3.open=false;E3.closingNow=false},1100);
+};
+window.cancelQueuedEnding=()=>{};
+/* ▶ forward: resume / skip to the end.  ◀ back: play it in reverse — stand up, walk back, ride off to the 2D road */
+function e3next(){
+  if(!E3.open||E3.closingNow)return;
+  if(E3.dir<0){if(E3.mode==='exit'&&E3.t<T.dis1)return;E3.dir=1;E3.mode='enter';return}
+  if(E3.t<T.end)E3.t=T.end;
+}
+function e3prev(){
+  if(!E3.open||E3.closingNow)return;
+  if(calm()||E3.t<T.dis0){closeEnding();return}             // still on the bike: just head back
+  E3.dir=-1;E3.mode='exit';
+}
+$('e3next').onclick=e3next;$('e3prev').onclick=e3prev;
+$('e3skip').onclick=()=>{if(E3.dir>0&&E3.t<T.end)E3.t=T.end};
+$('e3back').onclick=e3prev;
+$('e3replay').onclick=()=>{restart();$('ending').classList.remove('final')};
+/* keys/swipes belong to the ending while it is open */
+addEventListener('keydown',e=>{if(!E3.open)return;
+  if(e.key==='Escape')closeEnding();
+  else if(e.key===' '||e.key==='ArrowRight'||e.key==='PageDown')e3next();
+  else if(e.key==='ArrowLeft'||e.key==='PageUp')e3prev();
+  e.stopImmediatePropagation();
+  if(['ArrowRight','ArrowLeft','ArrowUp','ArrowDown',' ','PageUp','PageDown','Home','End'].includes(e.key))e.preventDefault()},true);
+let e3tx=null;
+addEventListener('touchstart',e=>{if(!E3.open)return;e3tx=e.touches[0].clientX;e.stopImmediatePropagation()},{capture:true,passive:true});
+addEventListener('touchend',e=>{if(!E3.open)return;e.stopImmediatePropagation();
+  if(e3tx===null)return;const dx=e.changedTouches[0].clientX-e3tx;e3tx=null;
+  if(Math.abs(dx)>45&&!e.target.closest('a,button'))(dx<0?e3next:e3prev)()},{capture:true,passive:true});
+})();
 </script>
 </body>
 </html>
